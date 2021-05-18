@@ -43,8 +43,8 @@ use_all_real_fake = False
 use_population = False
 
 # ===Oracle or Real, type===
-if_real_data = False  # if use real data
-dataset = 'oracle'  # oracle, image_coco, emnlp_news, amazon_app_book, amazon_app_movie, mr15
+if_real_data = True  # if use real data
+dataset = 'emnlp_news'  # oracle, image_coco, emnlp_news, amazon_app_book, amazon_app_movie, mr15
 model_type = 'vanilla'  # vanilla, RMC (custom)
 loss_type = 'rsgan'  # rsgan lsgan ragan vanilla wgan hinge, for Discriminator (CatGAN)
 mu_type = 'ragan'  # rsgan lsgan ragan vanilla wgan hinge

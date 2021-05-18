@@ -188,6 +188,8 @@ class TransformerGenerator(nn.Module):
         """src: [max_seq_len, batch_size]"""
 
         print(f" Input: src: {src.size()}, trg: {trg.size()}")
+        print(src)
+        print(trg)
         if self.trg_mask is None or self.trg_mask.size(0) != len(trg):
             self.trg_mask = self.generate_square_subsequent_mask(len(trg)).to(trg.device)
 
@@ -197,24 +199,32 @@ class TransformerGenerator(nn.Module):
         src = self.encoder(src)  * math.sqrt(self.embedding_dim) #src: [max_seq_len, batch_size, embedding_dim]
         trg = self.decoder(trg) * math.sqrt(self.embedding_dim)  #trg: [max_seq_len, batch_size, embedding_dim]
         print(f" After embedding: src: {src.size()}, trg: {trg.size()}")
+        print(src)
+        print(trg)
 
         src = self.pos_encoder(src) #src: [max_seq_len, batch_size, embedding_dim]
         trg = self.pos_decoder(trg) #trg: [max_seq_len, batch_size, embedding_dim]
         print(f" After positional encoding: src: {src.size()}, trg: {trg.size()}")
+        print(src)
+        print(trg)
 
         output = self.transformer(src, trg, src_mask=self.src_mask, tgt_mask=self.trg_mask, memory_mask=self.memory_mask,
                                   src_key_padding_mask=src_pad_mask, tgt_key_padding_mask=trg_pad_mask, memory_key_padding_mask=src_pad_mask)
                                   #output: [max_seq_len, batch_size, embedding_dim]
         print(f" After Transformer: output: {output.size()}")
+        print(output)
 
-        output = self.fc_out(output) #output: [max_seq_len, batch_size, embedding_dim]
+        output = self.fc_out(output) #output: [max_seq_len, batch_size, vocab_size]
         print(f" After fc_out: output: {output.size()}")
+        print(output)
 
         output = output.contiguous().view(-1, self.vocab_size)  # [max_seq_len * batch_size, vocab_size]
         print(f" After view: output: {output.size()}")
+        print(output)
 
         pred = self.softmax(output) # [max_seq_len * batch_size, vocab_size]
         print(f" After softmax: pred: {pred.size()}")
+        print(pred)
 
         return pred       
         
@@ -237,7 +247,7 @@ class TransformerGenerator(nn.Module):
                 inp = inp.cuda()
 
             for i in range(self.max_seq_len):
-                dummy_tgt = torch.zeros(self.max_seq_len, batch_size, dtype=torch.int)
+                dummy_tgt = torch.ones(self.max_seq_len, batch_size, dtype=torch.int)
                 if self.gpu:
                     dummy_tgt = dummy_tgt.cuda()
 
@@ -246,6 +256,7 @@ class TransformerGenerator(nn.Module):
                 #Expand to 3 dimesnion and then drop the first one of size max_seq_len
                 pred = torch.reshape(out, (self.max_seq_len, batch_size, self.vocab_size)) # [max_seq_len, batch_size, vocab_size]
                 pred = pred[i, :, :]        # [batch_size, vocab_size]
+                print(pred)
                 
                 next_token = torch.multinomial(torch.exp(pred), 1)  # [batch_size, 1] (sampling from each row)
                 #print(f"Nexttoken: {next_token.size()}")
