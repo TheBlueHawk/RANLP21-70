@@ -149,12 +149,28 @@ class TransformerGenerator(nn.Module):
 
         self.encoder = nn.Embedding(vocab_size, embedding_dim, padding_idx=padding_idx)
         self.pos_encoder = PositionalEncoding(embedding_dim, dropout)
+
+        self.decoder = nn.Embedding(vocab_size, embedding_dim, padding_idx=padding_idx)
+        self.pos_decoder = PositionalEncoding(embedding_dim, dropout)
+
         print(f"embed_dim: {embedding_dim}, hidden_dim: {hidden_dim}, num_heads:{nhead}")
-        encoder_layers = TransformerEncoderLayer(embedding_dim, nhead, hidden_dim, dropout)
-        self.transformer_encoder = TransformerEncoder(encoder_layers, nlayers)
+        #encoder_layers = TransformerEncoderLayer(d_model=embedding_dim, nhead=nhead, dim_feedforward=hidden_dim, dropout=dropout)
+        #self.transformer_encoder = TransformerEncoder(encoder_layers, nlayers)
+
+        self.transformer = nn.Transformer(
+            d_model=embedding_dim, 
+            nhead=nhead,
+            num_encoder_layers=nlayers,
+            num_decoder_layers=nlayers,
+            dim_feedforward=hidden_dim, 
+            dropout=dropout)
         
-        self.decoder = nn.Linear(embedding_dim, vocab_size)
+        self.fc_out = nn.Linear(embedding_dim, vocab_size)
         self.softmax = nn.LogSoftmax(dim=-1)
+
+        self.src_mask = None
+        self.trg_mask = None
+        self.memory_mask = None
 
         self.init_weights()
 
@@ -164,37 +180,44 @@ class TransformerGenerator(nn.Module):
         if cfg.CUDA:
             mask = mask.cuda()
         return mask
+    
+    def make_len_mask(self, inp):
+        return (inp == 0).transpose(0, 1)
 
-    def forward(self, src, src_mask=None):
+    def forward(self, src, trg, tgt_mask=None):
         """src: [max_seq_len, batch_size]"""
 
-        #print("1. SRC:")
-        #print(src.size())
-        src1 = self.encoder(src) * math.sqrt(self.embedding_dim) #src1: [max_seq_len, batch_size, embedding_dim]
-        #print("2. SRC after encoder(inp):")
-        #print(src1.size())
-        #if len(src1.size()) == 1:
-        #    src1 = src1.unsqueeze(1) # ???? batch_size * 1 * embedding_dim
-        #print("3. SRC after unsqueeze:")
-        #print(src1.size())
-        src2 = self.pos_encoder(src1) #src2: [max_seq_len, batch_size, embedding_dim]
-        #print("4. SRC after pos_encoder:")
-        #print(src2.size())
-        output = self.transformer_encoder(src2, src_mask) #output: [max_seq_len, batch_size, embedding_dim]
-        #output = self.transformer_encoder(src)
-        #print("1. OUT after transencod:")
-        #print(output.size())
-        output = self.decoder(output) #output: [max_seq_len, batch_size, vocab_size]
-        #print("2. OUT after decoder: ")
-        #print(output.size())
-        #return output
+        print(f" Input: src: {src.size()}, trg: {trg.size()}")
+        if self.trg_mask is None or self.trg_mask.size(0) != len(trg):
+            self.trg_mask = self.generate_square_subsequent_mask(len(trg)).to(trg.device)
+
+        src_pad_mask = self.make_len_mask(src)
+        trg_pad_mask = self.make_len_mask(trg)
+
+        src = self.encoder(src)  * math.sqrt(self.embedding_dim) #src: [max_seq_len, batch_size, embedding_dim]
+        trg = self.decoder(trg) * math.sqrt(self.embedding_dim)  #trg: [max_seq_len, batch_size, embedding_dim]
+        print(f" After embedding: src: {src.size()}, trg: {trg.size()}")
+
+        src = self.pos_encoder(src) #src: [max_seq_len, batch_size, embedding_dim]
+        trg = self.pos_decoder(trg) #trg: [max_seq_len, batch_size, embedding_dim]
+        print(f" After positional encoding: src: {src.size()}, trg: {trg.size()}")
+
+        output = self.transformer(src, trg, src_mask=self.src_mask, tgt_mask=self.trg_mask, memory_mask=self.memory_mask,
+                                  src_key_padding_mask=src_pad_mask, tgt_key_padding_mask=trg_pad_mask, memory_key_padding_mask=src_pad_mask)
+                                  #output: [max_seq_len, batch_size, embedding_dim]
+        print(f" After Transformer: output: {output.size()}")
+
+        output = self.fc_out(output) #output: [max_seq_len, batch_size, embedding_dim]
+        print(f" After fc_out: output: {output.size()}")
+
         output = output.contiguous().view(-1, self.vocab_size)  # [max_seq_len * batch_size, vocab_size]
-        #print("3. OUT after view:")
-        #print(output.size())
+        print(f" After view: output: {output.size()}")
+
         pred = self.softmax(output) # [max_seq_len * batch_size, vocab_size]
-        #print("PRED")
-        #print(pred.size())
-        return pred
+        print(f" After softmax: pred: {pred.size()}")
+
+        return pred       
+        
 
     def sample(self, num_samples, batch_size, start_letter=cfg.start_letter):
         """
@@ -214,7 +237,11 @@ class TransformerGenerator(nn.Module):
                 inp = inp.cuda()
 
             for i in range(self.max_seq_len):
-                out = self.forward(inp, self.generate_square_subsequent_mask(self.max_seq_len))  # [max_seq_len * batch_size, vocab_size]
+                dummy_tgt = torch.zeros(self.max_seq_len, batch_size, dtype=torch.int)
+                if self.gpu:
+                    dummy_tgt = dummy_tgt.cuda()
+
+                out = self.forward(inp,trg=dummy_tgt, tgt_mask=self.generate_square_subsequent_mask(self.max_seq_len))  # [max_seq_len * batch_size, vocab_size]
                 
                 #Expand to 3 dimesnion and then drop the first one of size max_seq_len
                 pred = torch.reshape(out, (self.max_seq_len, batch_size, self.vocab_size)) # [max_seq_len, batch_size, vocab_size]
@@ -233,8 +260,8 @@ class TransformerGenerator(nn.Module):
     def init_weights(self):
         initrange = 0.1
         self.encoder.weight.data.uniform_(-initrange, initrange)
-        self.decoder.bias.data.zero_()
-        self.decoder.weight.data.uniform_(-initrange, initrange)
+        self.fc_out.bias.data.zero_()
+        self.fc_out.weight.data.uniform_(-initrange, initrange)
 
     def init_oracle(self):
         for param in self.parameters():
