@@ -64,7 +64,11 @@ class NLL(Metrics):
                     target = target.transpose(1, 0) # [max_seq_len, batch_size]
                     model.init_weights()
                     src_mask = model.generate_square_subsequent_mask(model.max_seq_len)
-                    pred = model.forward(inp, src_mask)  # [max_seq_len * batch_size, vocab_size]
+
+                    dummy_tgt = torch.ones_like(target)
+
+                    pred = model.forward(inp, dummy_tgt, src_mask)  # [max_seq_len * batch_size, vocab_size]
+                    #print(f"pred: {pred.size()}")
                 target = target.contiguous().view(-1) # [max_seq_len * batch_size]
                 loss = criterion(pred, target)
                 total_loss += loss.item()
