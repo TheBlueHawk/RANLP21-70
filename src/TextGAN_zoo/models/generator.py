@@ -218,7 +218,7 @@ class TransformerGenerator(nn.Module):
         output = self.fc_out(output) #output: [max_seq_len, batch_size, vocab_size]
         print(f" After fc_out: output: {output.size()}")
         print(output)
-        return output
+        #return output
 
         #output = output.contiguous().view(-1, self.vocab_size)  # [max_seq_len * batch_size, vocab_size]
         #print(f" After view: output: {output.size()}")
@@ -228,7 +228,39 @@ class TransformerGenerator(nn.Module):
         print(f" After softmax: pred: {pred.size()}")
         print(pred)
 
-        return pred          
+        return pred  
+
+    #Code potentially usefull, not used yet
+    def generate(self, src, src_key_padding_mask=None):
+        ''' src has dimension of LEN x 1 '''
+        src = self.embedding(src)
+        src = self.pos_encoder(src)
+        src = self.transformer_encoder(src, src_key_padding_mask=src_key_padding_mask)
+        
+        inputs = [sos_idx]
+        for i in range(self.max_seq_len):
+            tgt = torch.LongTensor([inputs]).view(-1,1)
+            tgt_mask = self.get_mask(i+1)
+            if self.gpu:
+                tgt = tgt.cuda()
+                tgt_mask = tgt_mask.cuda()
+            
+            tgt = self.embedding(tgt)
+            tgt = self.pos_encoder(tgt)
+            output = self.transformer_decoder(
+                tgt=tgt, 
+                memory=src, 
+                tgt_mask=tgt_mask,
+                memory_key_padding_mask = src_key_padding_mask)
+            
+            output = self.linear(output)
+            output = self.softmax(output)
+            output = output[-1] # the last timestep
+            values, indices = output.max(dim=-1)
+            pred_token = indices.item()
+            inputs.append(pred_token)
+
+        return inputs[1:]        
 
     def sample(self, num_samples, batch_size, start_letter=cfg.start_letter):
         """
