@@ -33,6 +33,8 @@ class BasicInstructor:
 
         self.clas = None
 
+        print("I'm here")
+
         # load dictionary
         self.word2idx_dict, self.idx2word_dict = load_dict(cfg.dataset)
 
@@ -276,6 +278,7 @@ class SelfAttentionInstructor:
         self.show_config()
 
         self.clas = None
+        self.sa = True
 
         # load dictionary
         self.word2idx_dict, self.idx2word_dict = load_dict(cfg.dataset)
@@ -344,8 +347,8 @@ class SelfAttentionInstructor:
                 inp, target = inp.cuda(), target.cuda()
 
             model.init_weights()
-            src_mask = model.generate_square_subsequent_mask(model.max_seq_len)
-            pred = model.forward(inp, src_mask)
+            dummy_tgt = torch.ones_like(target)
+            pred = model.forward(inp, dummy_tgt)  # [max_seq_len * batch_size, vocab_size]
             loss = criterion(pred, target.view(-1))
             self.optimize(optimizer, loss, model)
             total_loss += loss.item()
@@ -454,7 +457,9 @@ class SelfAttentionInstructor:
             eval_samples = self.gen.sample(cfg.samples_num, 4 * cfg.batch_size)
             gen_data = GenDataIter(eval_samples)
             gen_tokens = tensor_to_tokens(eval_samples, self.idx2word_dict)
+            print(gen_tokens)
             gen_tokens_s = tensor_to_tokens(self.gen.sample(200, 200), self.idx2word_dict)
+            print(gen_tokens_s)
 
             # Reset metrics
             self.bleu.reset(test_text=gen_tokens, real_text=self.test_data.tokens)

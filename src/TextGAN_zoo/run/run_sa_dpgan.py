@@ -35,10 +35,10 @@ gen_pretrain = int(False)
 dis_pretrain = int(False)
 MLE_train_epoch = 120
 ADV_train_epoch = 200
-tips = 'DPGAN experiments'
+tips = 'SA_DPGAN experiments'
 
 # ===Oracle  or Real===
-if_real_data = [int(False), int(False), int(True)]
+if_real_data = [int(False), int(True), int(True)]
 dataset = ['oracle', 'image_coco', 'emnlp_news']
 vocab_size = [5000, 0, 0]
 

@@ -341,9 +341,8 @@ class SelfAttentionInstructor:
                 inp, target = inp.cuda(), target.cuda()
 
             model.init_weights()
-            src_mask = model.generate_square_subsequent_mask(model.max_seq_len)
             dummy_tgt = torch.ones_like(target)
-            pred = model.forward(inp, dummy_tgt, src_mask)  # [max_seq_len * batch_size, vocab_size]
+            pred = model.forward(inp, dummy_tgt)  # [max_seq_len * batch_size, vocab_size]
            
             loss = criterion(pred, target.contiguous().view(-1))
             self.optimize(optimizer, loss, model)

@@ -179,12 +179,12 @@ class TransformerGenerator(nn.Module):
     def make_len_mask(self, inp):
         return (inp == 0).transpose(0, 1)
 
-    def forward(self, src, trg, tgt_mask=None):
+    def forward(self, src, trg):
         """src: [max_seq_len, batch_size]"""
 
-        #print(f" Input: src: {src.size()}, trg: {trg.size()}")
-        #print(src)
-        #print(trg)
+        print(f" Input: src: {src.size()}, trg: {trg.size()}")
+        print(src)
+        print(trg)
         if self.trg_mask is None or self.trg_mask.size(0) != len(trg):
             self.trg_mask = self.generate_square_subsequent_mask(len(trg)).to(trg.device)
 
@@ -193,15 +193,15 @@ class TransformerGenerator(nn.Module):
 
         src = self.embedding(src)  * math.sqrt(self.embedding_dim) #src: [max_seq_len, batch_size, embedding_dim]
         trg = self.embedding(trg) * math.sqrt(self.embedding_dim)  #trg: [max_seq_len, batch_size, embedding_dim]
-        #print(f" After embedding: src: {src.size()}, trg: {trg.size()}")
-        #print(src)
-        #print(trg)
+        print(f" After embedding: src: {src.size()}, trg: {trg.size()}")
+        print(src)
+        print(trg)
 
         src = self.pos_encoder(src) #src: [max_seq_len, batch_size, embedding_dim]
         trg = self.pos_encoder(trg) #trg: [max_seq_len, batch_size, embedding_dim]
-        #print(f" After positional encoding: src: {src.size()}, trg: {trg.size()}")
-        #print(src)
-        #print(trg)
+        print(f" After positional encoding: src: {src.size()}, trg: {trg.size()}")
+        print(src)
+        print(trg)
 
         src = self.transformer_encoder(src, src_key_padding_mask=src_pad_mask) #output: [max_seq_len, batch_size, embedding_dim]
 
@@ -212,59 +212,25 @@ class TransformerGenerator(nn.Module):
             memory_mask = self.memory_mask, 
             tgt_key_padding_mask = trg_pad_mask, 
             memory_key_padding_mask = src_pad_mask) #output: [max_seq_len, batch_size, embedding_dim]
-        #print(f" After decoder: output: {output.size()}")
-        #print(output)
+        print(f" After decoder: output: {output.size()}")
+        print(output)
 
         output = self.fc_out(output) #output: [max_seq_len, batch_size, vocab_size]
-        #print(f" After fc_out: output: {output.size()}")
-        #print(output)
+        print(f" After fc_out: output: {output.size()}")
+        print(output)
         #return output
 
-        #output = output.contiguous().view(-1, self.vocab_size)  # [max_seq_len * batch_size, vocab_size]
-        #print(f" After view: output: {output.size()}")
-        #print(output)
-
         #Flatten all the sentences one after the other
-        output = output.view(-1, self.vocab_size)
-        #print(f" After view: output: {output.size()}")
+        output = output.view(-1, self.vocab_size)  # [max_seq_len * batch_size, vocab_size]
+        print(f" After view: output: {output.size()}")
+        print(output)
 
-        pred = self.softmax(output) # [max_seq_len, batch_size, vocab_size] with vocab_size a distribution
-        #print(f" After softmax: pred: {pred.size()}")
-        #print(pred)
+        pred = self.softmax(output) # [max_seq_len * batch_size, vocab_size] with vocab_size a distribution
+        print(f" After softmax: pred: {pred.size()}")
+        print(pred)
 
         return pred  
 
-    #Code potentially usefull, not used yet
-    def generate(self, src, src_key_padding_mask=None):
-        ''' src has dimension of LEN x 1 '''
-        src = self.embedding(src)
-        src = self.pos_encoder(src)
-        src = self.transformer_encoder(src, src_key_padding_mask=src_key_padding_mask)
-        
-        inputs = [sos_idx]
-        for i in range(self.max_seq_len):
-            tgt = torch.LongTensor([inputs]).view(-1,1)
-            tgt_mask = self.get_mask(i+1)
-            if self.gpu:
-                tgt = tgt.cuda()
-                tgt_mask = tgt_mask.cuda()
-            
-            tgt = self.embedding(tgt)
-            tgt = self.pos_encoder(tgt)
-            output = self.transformer_decoder(
-                tgt=tgt, 
-                memory=src, 
-                tgt_mask=tgt_mask,
-                memory_key_padding_mask = src_key_padding_mask)
-            
-            output = self.linear(output)
-            output = self.softmax(output)
-            output = output[-1] # the last timestep
-            values, indices = output.max(dim=-1)
-            pred_token = indices.item()
-            inputs.append(pred_token)
-
-        return inputs[1:]        
 
     def sample(self, num_samples, batch_size, start_letter=cfg.start_letter):
         """
@@ -285,10 +251,11 @@ class TransformerGenerator(nn.Module):
             dummy_tgt = torch.ones(self.max_seq_len, batch_size, dtype=torch.int)
             if self.gpu:
                 dummy_tgt = dummy_tgt.cuda()
-                        
-            tgt_mask = self.generate_square_subsequent_mask(self.max_seq_len)
-            output = self.forward(inp, dummy_tgt, tgt_mask=tgt_mask)  # [max_seq_len * batch_size, vocab_size]
-            #print(f"Output after forward: {output.size()}")
+            
+            output = self.forward(inp, dummy_tgt)  # [max_seq_len * batch_size, vocab_size]
+            
+            print(f"Output after forward: {output}")
+            print(f"Dummy_tgt after forward: {dummy_tgt}")
                
 
             #Done in forward pass 
@@ -306,25 +273,22 @@ class TransformerGenerator(nn.Module):
             samples[b * batch_size : (b + 1) * batch_size] = output
 
         samples = samples[:num_samples]
-        return samples
+        print(samples)
+        return samples    
 
 
-    
-
-
-    #Replace init_hidden, not sure it's working properly
+    #TODO: Replace init_hidden, is it still necessary?
     def init_weights(self):
-        initrange = 0.1
-        #Can't we use a pretrained embedding?
-        #self.embedding.weight.data.uniform_(-initrange, initrange)
-        self.fc_out.bias.data.zero_()
-        self.fc_out.weight.data.uniform_(-initrange, initrange)
+      pass
+        
 
     def init_oracle(self):
         for param in self.parameters():
             if param.requires_grad:
-                initrange = 0.1
-                torch.nn.init.uniform_(param, -initrange, initrange)
+                #TODO: should we init the transformer weights with a normal or uniform distribution?
+                torch.nn.init.normal_(param, mean=0, std=1)
+                #initrange = 0.1
+                #torch.nn.init.uniform_(param, -initrange, initrange)
 
 
 class PositionalEncoding(nn.Module):
