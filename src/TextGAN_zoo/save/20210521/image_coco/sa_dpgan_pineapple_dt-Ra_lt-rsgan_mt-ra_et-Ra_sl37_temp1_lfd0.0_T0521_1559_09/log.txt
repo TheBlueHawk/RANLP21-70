@@ -1,0 +1,105 @@
+====================================================================================================
+> training arguments:
+>>> if_test: 0
+>>> run_model: sa_dpgan
+>>> k_label: 2
+>>> dataset: image_coco
+>>> model_type: pineapple
+>>> loss_type: rsgan
+>>> mu_type: ragan
+>>> eval_type: Ra
+>>> d_type: Ra
+>>> if_real_data: 1
+>>> sa: 1
+>>> cuda: 1
+>>> device: 0
+>>> devices: 0
+>>> shuffle: 0
+>>> gen_init: normal
+>>> dis_init: uniform
+>>> n_parent: 1
+>>> eval_b_num: 8
+>>> lambda_fq: 1.0
+>>> lambda_fd: 0.0
+>>> d_out_mean: True
+>>> freeze_dis: False
+>>> freeze_clas: False
+>>> use_all_real_fake: False
+>>> use_population: False
+>>> samples_num: 10000
+>>> vocab_size: 4658
+>>> mle_epoch: 120
+>>> clas_pre_epoch: 10
+>>> adv_epoch: 200
+>>> inter_epoch: 15
+>>> batch_size: 64
+>>> max_seq_len: 37
+>>> start_letter: 1
+>>> padding_idx: 0
+>>> gen_lr: 0.01
+>>> gen_adv_lr: 0.2
+>>> dis_lr: 0.01
+>>> clip_norm: 5.0
+>>> pre_log_step: 10
+>>> adv_log_step: 1
+>>> train_data: dataset/image_coco.txt
+>>> test_data: dataset/testdata/image_coco_test.txt
+>>> temp_adpt: exp
+>>> evo_temp_step: 1
+>>> temperature: 1
+>>> ora_pretrain: 1
+>>> gen_pretrain: 1
+>>> dis_pretrain: 1
+>>> adv_g_step: 1
+>>> rollout_num: 16
+>>> gen_embed_dim: 32
+>>> gen_hidden_dim: 40
+>>> goal_size: 16
+>>> step_size: 4
+>>> mem_slots: 1
+>>> num_heads: 4
+>>> head_size: 64
+>>> gen_nlayers: 4
+>>> gen_num_heads: 4
+>>> dropout: 0.5
+>>> d_step: 5
+>>> d_epoch: 3
+>>> adv_d_step: 4
+>>> adv_d_epoch: 2
+>>> dis_embed_dim: 64
+>>> dis_hidden_dim: 64
+>>> num_rep: 64
+>>> dis_nlayers: 4
+>>> dis_num_heads: 4
+>>> use_nll_oracle: 1
+>>> use_nll_gen: 1
+>>> use_nll_div: 1
+>>> use_bleu: 1
+>>> use_self_bleu: 0
+>>> use_clas_acc: True
+>>> use_ppl: 0
+>>> log_file: log/log_0521_1559_09.txt
+>>> save_root: save/20210521/image_coco/sa_dpgan_pineapple_dt-Ra_lt-rsgan_mt-ra_et-Ra_sl37_temp1_lfd0.0_T0521_1559_09/
+>>> signal_file: run_signal.txt
+>>> tips: SA_DPGAN experiments
+====================================================================================================
+Loading image_coco dataset
+Load pre-trained discriminator: pretrain/image_coco/dis_pretrain_sa_dpgan_pineapple_sl37_sn10000.pt
+Load MLE pre-trained generator: pretrain/image_coco/gen_MLE_pretrain_sa_dpgan_pineapple_sl37_sn10000.pt
+Starting Adversarial Training...
+Initial generator: BLEU-[2, 3, 4, 5] = [0.131, 0.04, 0.019, 0.013], NLL_gen = 1.7572, NLL_div = 3.8136, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+-----
+ADV EPOCH 0
+-----
+[ADV-GEN]: g_loss = 2172549614010368.0000, BLEU-[2, 3, 4, 5] = [0.064, 0.018, 0.009, 0.007], NLL_gen = 1.941, NLL_div = 2.7008, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 5973113.0000, neg_reward = 9019.1211,
+[ADV-DIS] d_step 1: pos_reward = 5942406.0000, neg_reward = 58588.7578,
+[ADV-DIS] d_step 2: pos_reward = 6002200.0000, neg_reward = 15818.3320,
+[ADV-DIS] d_step 3: pos_reward = 6059982.0000, neg_reward = 55.3833,
+-----
+ADV EPOCH 1
+-----
+[ADV-GEN]: g_loss = 386343448346624.0000, BLEU-[2, 3, 4, 5] = [0.048, 0.017, 0.008, 0.006], NLL_gen = 2.3955, NLL_div = 1.8072, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 6237894.0000, neg_reward = 19734.2676,
+[ADV-DIS] d_step 1: pos_reward = 6253432.0000, neg_reward = 93.9879,
+[ADV-DIS] d_step 2: pos_reward = 6451377.0000, neg_reward = 3331.9709,

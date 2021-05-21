@@ -17,7 +17,7 @@ class SADPGANInstructor(SelfAttentionInstructor):
         self.dis = SA_DPGAN_D(cfg.gen_embed_dim, cfg.gen_hidden_dim, cfg.vocab_size, cfg.max_seq_len,
                            cfg.padding_idx, num_heads=cfg.dis_num_heads, nlayers=cfg.dis_nlayers, dropout=cfg.dropout, gpu=cfg.CUDA)
         self.init_model()
-        
+
 
         # Optimizer
         self.gen_opt = optim.Adam(self.gen.parameters(), lr=cfg.gen_lr)
@@ -104,6 +104,8 @@ class SADPGANInstructor(SelfAttentionInstructor):
 
             gen_sample, gen_sample_log_prob = self.gen.sample_teacher_forcing(inp)
             word_reward, sentence_reward = self.dis.getReward(gen_sample)
+            print(f"word reward: {word_reward}")
+            print(f"sentence_reward: {sentence_reward}")
             sentence_reward = sentence_reward.repeat(1, cfg.max_seq_len)
             reward_matrix = sentence_reward * word_reward * dis_count_matrix
             for i in range(cfg.max_seq_len):
