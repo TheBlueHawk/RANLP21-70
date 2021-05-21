@@ -17,6 +17,7 @@ class SADPGANInstructor(SelfAttentionInstructor):
         self.dis = SA_DPGAN_D(cfg.gen_embed_dim, cfg.gen_hidden_dim, cfg.vocab_size, cfg.max_seq_len,
                            cfg.padding_idx, num_heads=cfg.dis_num_heads, nlayers=cfg.dis_nlayers, dropout=cfg.dropout, gpu=cfg.CUDA)
         self.init_model()
+        
 
         # Optimizer
         self.gen_opt = optim.Adam(self.gen.parameters(), lr=cfg.gen_lr)

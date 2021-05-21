@@ -23,7 +23,7 @@ oracle_pretrain = True  # True
 gen_pretrain = False
 dis_pretrain = False
 clas_pretrain = False
-sa = False #Self attention
+sa = True #Self attention
 
 run_model = 'catgan'  # seqgan, leakgan, maligan, jsdgan, relgan, evogan, sentigan, catgan, dpgan, dgsan, cot
 k_label = 2  # num of labels, >=2
@@ -70,9 +70,9 @@ start_letter = 1
 padding_idx = 0
 start_token = 'BOS'
 padding_token = 'EOS'
-gen_lr = 0.01  # 0.01
-gen_adv_lr = 1e-4  # RelGAN-1e-4
-dis_lr = 1e-4  # SeqGAN,LeakGAN-1e-2, RelGAN-1e-4
+gen_lr = 0.2  # 0.01
+gen_adv_lr = 0.2  # RelGAN-1e-4
+dis_lr = 0.2  # SeqGAN,LeakGAN-1e-2, RelGAN-1e-4
 clas_lr = 1e-3
 clip_norm = 5.0
 

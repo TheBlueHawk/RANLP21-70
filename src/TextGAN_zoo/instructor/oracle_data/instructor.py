@@ -256,6 +256,13 @@ class BasicInstructor:
                 self.oracle_list[i].load_state_dict(torch.load(state_dict_path, map_location=torch.device('cpu')))
 
 
+
+
+
+
+
+
+
 class SelfAttentionInstructor:
     def __init__(self, opt):
         self.log = create_logger(__name__, silent=False, to_disk=True,
@@ -335,8 +342,8 @@ class SelfAttentionInstructor:
         for i, data in enumerate(data_loader):
             
             inp, target = data['input'], data['target'] #[batch_size, max_seq_len], [batch_size, max_seq_len]
-            inp = inp.transpose(1, 0)       # [max_seq_len, batch_size]
-            target = target.transpose(1, 0) # [max_seq_len, batch_size]
+            inp = inp.transpose(1, 0).contiguous()       # [max_seq_len, batch_size]
+            target = target.transpose(1, 0).contiguous() # [max_seq_len, batch_size]
             if cfg.CUDA:
                 inp, target = inp.cuda(), target.cuda()
 
@@ -344,7 +351,7 @@ class SelfAttentionInstructor:
             dummy_tgt = torch.ones_like(target)
             pred = model.forward(inp, dummy_tgt)  # [max_seq_len * batch_size, vocab_size]
            
-            loss = criterion(pred, target.contiguous().view(-1))
+            loss = criterion(pred, target.view(-1))
             self.optimize(optimizer, loss, model)
             total_loss += loss.item()
         return total_loss / len(data_loader)

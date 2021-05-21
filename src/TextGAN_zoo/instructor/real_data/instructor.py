@@ -268,6 +268,19 @@ class BasicInstructor:
         if cfg.CUDA:
             self.gen.temperature.data = self.gen.temperature.data.cuda()
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 class SelfAttentionInstructor:
     def __init__(self, opt):
         self.log = create_logger(__name__, silent=False, to_disk=True,
@@ -281,6 +294,7 @@ class SelfAttentionInstructor:
         self.sa = True
 
         # load dictionary
+        self.log.info(f"Loading {cfg.dataset} dataset")
         self.word2idx_dict, self.idx2word_dict = load_dict(cfg.dataset)
 
         # Dataloader
@@ -342,13 +356,17 @@ class SelfAttentionInstructor:
     def train_gen_epoch(self, model, data_loader, criterion, optimizer):
         total_loss = 0
         for i, data in enumerate(data_loader):
-            inp, target = data['input'], data['target']
+            inp, target = data['input'], data['target'] #[batch_size, max_seq_len], [batch_size, max_seq_len]
+            inp = inp.transpose(1, 0).contiguous()       # [max_seq_len, batch_size]
+            target = target.transpose(1, 0).contiguous() # [max_seq_len, batch_size]
             if cfg.CUDA:
                 inp, target = inp.cuda(), target.cuda()
+            #print(f"inp: {inp} \n target: {target}")
 
             model.init_weights()
             dummy_tgt = torch.ones_like(target)
             pred = model.forward(inp, dummy_tgt)  # [max_seq_len * batch_size, vocab_size]
+            #print(f"pred: {pred}")
             loss = criterion(pred, target.view(-1))
             self.optimize(optimizer, loss, model)
             total_loss += loss.item()
@@ -457,9 +475,9 @@ class SelfAttentionInstructor:
             eval_samples = self.gen.sample(cfg.samples_num, 4 * cfg.batch_size)
             gen_data = GenDataIter(eval_samples)
             gen_tokens = tensor_to_tokens(eval_samples, self.idx2word_dict)
-            print(gen_tokens)
+            #print(gen_tokens)
             gen_tokens_s = tensor_to_tokens(self.gen.sample(200, 200), self.idx2word_dict)
-            print(gen_tokens_s)
+            #print(gen_tokens_s)
 
             # Reset metrics
             self.bleu.reset(test_text=gen_tokens, real_text=self.test_data.tokens)
