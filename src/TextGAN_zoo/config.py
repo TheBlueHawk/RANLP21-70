@@ -23,7 +23,7 @@ oracle_pretrain = True  # True
 gen_pretrain = False
 dis_pretrain = False
 clas_pretrain = False
-sa = True #Self attention
+sa = False #Self attention
 
 run_model = 'catgan'  # seqgan, leakgan, maligan, jsdgan, relgan, evogan, sentigan, catgan, dpgan, dgsan, cot
 k_label = 2  # num of labels, >=2
@@ -44,7 +44,7 @@ use_population = False
 
 # ===Oracle or Real, type===
 if_real_data = True  # if use real data
-dataset = 'emnlp_news'  # oracle, image_coco, emnlp_news, amazon_app_book, amazon_app_movie, mr15
+dataset = 'image_coco'  # oracle, image_coco, emnlp_news, amazon_app_book, amazon_app_movie, mr15
 model_type = 'vanilla'  # vanilla, RMC (custom)
 loss_type = 'rsgan'  # rsgan lsgan ragan vanilla wgan hinge, for Discriminator (CatGAN)
 mu_type = 'ragan'  # rsgan lsgan ragan vanilla wgan hinge
@@ -62,7 +62,7 @@ temperature = 1
 
 # ===Basic Train===
 samples_num = 10000  # 10000, mr15: 2000,
-MLE_train_epoch = 150  # SeqGAN-80, LeakGAN-8, RelGAN-150
+MLE_train_epoch = 120  # SeqGAN-80, LeakGAN-8, RelGAN-150
 PRE_clas_epoch = 10
 inter_epoch = 15  # LeakGAN-10
 batch_size = 32  # 64

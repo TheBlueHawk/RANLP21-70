@@ -20,7 +20,8 @@ def plt_x_y_data(x, y, title, c_id):
 def get_log_data(filename):
     with open(filename, 'r') as fin:
         all_lines = fin.read().strip().split('\n')
-        data_dict = {'Epoch': [],'NLL_oracle': [], 'NLL_gen': [], 'NLL_div': []}
+        #data_dict = {'Epoch': [],'NLL_oracle': [], 'NLL_gen': [], 'NLL_div': []}
+        data_dict = {'Epoch': [], 'pre_loss':[], 'BLEU-[2, 3, 4, 5]':[], 'NLL_gen': [], 'NLL_div': [], 'Self-BLEU-[2, 3, 4]':[], '[PPL-F, PPL-R]':[]}
 
         for line in all_lines:
             items = line.split()
@@ -37,7 +38,7 @@ def get_log_data(filename):
 if __name__ == '__main__':
     log_file_root = '../log/'
     # Custom your log files in lists, no more than len(color_list)
-    log_file_list = ['dpgan_log1', 'sa_dpgan_log1']
+    log_file_list = ['dpgan_imagecoco', 'sa_dpgan_imagecoco']
     legend_text = ['DPGAN', 'SADPGAN']
 
     color_id = 0
@@ -53,6 +54,7 @@ if __name__ == '__main__':
 
         # save log file
         all_data = get_log_data(log_file)
+        print(all_data)
         idxs = np.argsort(-np.array(all_data['Epoch']))
         plt_x_y_data(np.array(all_data['Epoch'])[idxs][:length], np.array(all_data['NLL_div'])[idxs][:length],
                      legend_text[idx], color_id)
@@ -61,7 +63,7 @@ if __name__ == '__main__':
     plt.legend()
     # plt.tight_layout()
     plt.xlabel(r'${\rm Epoch}$')
-    plt.ylabel(r'${\rm NLL_{\rm div}}$')
+    plt.ylabel(r'${\rm NLL_{div}}$')
     if if_save:
-        plt.savefig('../savefig/synthetic_oracle_div.png')
+        plt.savefig('../savefig/G_MLE_NLL_div.png')
     plt.show()

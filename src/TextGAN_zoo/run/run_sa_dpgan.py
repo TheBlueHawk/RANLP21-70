@@ -30,9 +30,9 @@ if_test = int(False)
 run_model = 'sa_dpgan'
 sa = int(True)
 CUDA = int(True)
-oracle_pretrain = int(True)
-gen_pretrain = int(True)
-dis_pretrain = int(True)
+oracle_pretrain = int(False)
+gen_pretrain = int(False)
+dis_pretrain = int(False)
 MLE_train_epoch = 120
 ADV_train_epoch = 200
 tips = 'SA_DPGAN experiments'
@@ -47,7 +47,7 @@ data_shuffle = int(False)
 model_type = 'pineapple'
 gen_init = 'normal'
 dis_init = 'uniform'
-samples_num = 10000
+samples_num = 1000
 batch_size = 64
 max_seq_len = 20
 gen_lr = 0.01
@@ -59,9 +59,9 @@ adv_log_step = 1
 ADV_g_step = 1
 rollout_num = 16
 gen_embed_dim = 32
-gen_hidden_dim = 40
+gen_hidden_dim = 32
 gen_num_heads = 4
-gen_nlayers = 4
+gen_nlayers = 2
 
 # ===Discriminator===
 d_step = 5
@@ -71,7 +71,7 @@ ADV_d_epoch = 2
 dis_embed_dim = 64
 dis_hidden_dim = 64
 dis_num_heads = 4
-dis_nlayers = 4
+dis_nlayers = 2
 
 # ===Metrics===
 use_nll_oracle = int(True)

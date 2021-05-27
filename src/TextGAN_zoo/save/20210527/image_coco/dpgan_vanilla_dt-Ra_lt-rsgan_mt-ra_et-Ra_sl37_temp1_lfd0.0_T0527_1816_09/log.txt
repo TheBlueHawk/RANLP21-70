@@ -1,0 +1,710 @@
+====================================================================================================
+> training arguments:
+>>> if_test: 0
+>>> run_model: dpgan
+>>> k_label: 2
+>>> dataset: image_coco
+>>> model_type: vanilla
+>>> loss_type: rsgan
+>>> mu_type: ragan
+>>> eval_type: Ra
+>>> d_type: Ra
+>>> if_real_data: 1
+>>> sa: False
+>>> cuda: 1
+>>> device: 0
+>>> devices: 0
+>>> shuffle: 0
+>>> gen_init: normal
+>>> dis_init: uniform
+>>> n_parent: 1
+>>> eval_b_num: 8
+>>> lambda_fq: 1.0
+>>> lambda_fd: 0.0
+>>> d_out_mean: True
+>>> freeze_dis: False
+>>> freeze_clas: False
+>>> use_all_real_fake: False
+>>> use_population: False
+>>> samples_num: 1000
+>>> vocab_size: 4658
+>>> mle_epoch: 120
+>>> clas_pre_epoch: 10
+>>> adv_epoch: 200
+>>> inter_epoch: 15
+>>> batch_size: 64
+>>> max_seq_len: 37
+>>> start_letter: 1
+>>> padding_idx: 0
+>>> gen_lr: 0.01
+>>> gen_adv_lr: 0.2
+>>> dis_lr: 0.01
+>>> clip_norm: 5.0
+>>> pre_log_step: 10
+>>> adv_log_step: 1
+>>> train_data: dataset/image_coco.txt
+>>> test_data: dataset/testdata/image_coco_test.txt
+>>> temp_adpt: exp
+>>> evo_temp_step: 1
+>>> temperature: 1
+>>> ora_pretrain: 0
+>>> gen_pretrain: 0
+>>> dis_pretrain: 0
+>>> adv_g_step: 1
+>>> rollout_num: 16
+>>> gen_embed_dim: 32
+>>> gen_hidden_dim: 32
+>>> goal_size: 16
+>>> step_size: 4
+>>> mem_slots: 1
+>>> num_heads: 4
+>>> head_size: 64
+>>> gen_nlayers: 3
+>>> gen_num_heads: 4
+>>> dropout: 0.5
+>>> d_step: 5
+>>> d_epoch: 3
+>>> adv_d_step: 4
+>>> adv_d_epoch: 2
+>>> dis_embed_dim: 64
+>>> dis_hidden_dim: 64
+>>> num_rep: 64
+>>> dis_nlayers: 2
+>>> dis_num_heads: 4
+>>> use_nll_oracle: 1
+>>> use_nll_gen: 1
+>>> use_nll_div: 1
+>>> use_bleu: 1
+>>> use_self_bleu: 0
+>>> use_clas_acc: True
+>>> use_ppl: 0
+>>> log_file: log/log_0527_1816_09.txt
+>>> save_root: save/20210527/image_coco/dpgan_vanilla_dt-Ra_lt-rsgan_mt-ra_et-Ra_sl37_temp1_lfd0.0_T0527_1816_09/
+>>> signal_file: run_signal.txt
+>>> tips: DPGAN experiments
+====================================================================================================
+Starting Generator MLE Training...
+[MLE-GEN] epoch 0 : Epoch = 0, pre_loss = 2.6033, BLEU-[2, 3, 4, 5] = [0.118, 0.052, 0.035, 0.03], NLL_gen = 1.8457, NLL_div = 2.1361, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 10 : Epoch = 10, pre_loss = 1.0775, BLEU-[2, 3, 4, 5] = [0.688, 0.428, 0.245, 0.152], NLL_gen = 1.0477, NLL_div = 1.0728, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 20 : Epoch = 20, pre_loss = 0.9302, BLEU-[2, 3, 4, 5] = [0.721, 0.479, 0.287, 0.182], NLL_gen = 0.9169, NLL_div = 0.928, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 30 : Epoch = 30, pre_loss = 0.8606, BLEU-[2, 3, 4, 5] = [0.74, 0.514, 0.311, 0.184], NLL_gen = 0.8516, NLL_div = 0.9324, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 40 : Epoch = 40, pre_loss = 0.8242, BLEU-[2, 3, 4, 5] = [0.735, 0.509, 0.315, 0.193], NLL_gen = 0.8211, NLL_div = 0.8908, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 50 : Epoch = 50, pre_loss = 0.7997, BLEU-[2, 3, 4, 5] = [0.734, 0.509, 0.323, 0.197], NLL_gen = 0.8028, NLL_div = 0.8363, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 60 : Epoch = 60, pre_loss = 0.7851, BLEU-[2, 3, 4, 5] = [0.73, 0.503, 0.309, 0.191], NLL_gen = 0.7936, NLL_div = 0.7992, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 70 : Epoch = 70, pre_loss = 0.7755, BLEU-[2, 3, 4, 5] = [0.734, 0.493, 0.289, 0.176], NLL_gen = 0.7835, NLL_div = 0.8343, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 80 : Epoch = 80, pre_loss = 0.7652, BLEU-[2, 3, 4, 5] = [0.73, 0.48, 0.284, 0.18], NLL_gen = 0.7783, NLL_div = 0.8284, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 90 : Epoch = 90, pre_loss = 0.7593, BLEU-[2, 3, 4, 5] = [0.732, 0.499, 0.301, 0.184], NLL_gen = 0.7699, NLL_div = 0.8182, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 100 : Epoch = 100, pre_loss = 0.7536, BLEU-[2, 3, 4, 5] = [0.723, 0.483, 0.292, 0.181], NLL_gen = 0.7663, NLL_div = 0.8014, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 110 : Epoch = 110, pre_loss = 0.7485, BLEU-[2, 3, 4, 5] = [0.728, 0.493, 0.3, 0.185], NLL_gen = 0.7632, NLL_div = 0.8187, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[MLE-GEN] epoch 119 : Epoch = 119, pre_loss = 0.7474, BLEU-[2, 3, 4, 5] = [0.716, 0.465, 0.28, 0.172], NLL_gen = 0.7618, NLL_div = 0.8105, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+Starting Discriminator Training...
+[MLE-DIS] d_step 0: pos_reward = 125.7661, neg_reward = 87.2032,
+[MLE-DIS] d_step 1: pos_reward = 310.2682, neg_reward = 222.2941,
+[MLE-DIS] d_step 2: pos_reward = 302.9054, neg_reward = 219.8730,
+[MLE-DIS] d_step 3: pos_reward = 472.6961, neg_reward = 325.0489,
+[MLE-DIS] d_step 4: pos_reward = 454.7886, neg_reward = 392.5947,
+Starting Adversarial Training...
+Initial generator: BLEU-[2, 3, 4, 5] = [0.748, 0.517, 0.315, 0.193], NLL_gen = 0.7618, NLL_div = 0.8028, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+-----
+ADV EPOCH 0
+-----
+[ADV-GEN]: g_loss = 193277600.0000, BLEU-[2, 3, 4, 5] = [0.754, 0.521, 0.324, 0.204], NLL_gen = 0.7628, NLL_div = 0.7606, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 538.9321, neg_reward = 482.5279,
+[ADV-DIS] d_step 1: pos_reward = 660.7664, neg_reward = 461.1912,
+[ADV-DIS] d_step 2: pos_reward = 504.8179, neg_reward = 374.3430,
+[ADV-DIS] d_step 3: pos_reward = 859.2042, neg_reward = 593.3613,
+-----
+ADV EPOCH 1
+-----
+[ADV-GEN]: g_loss = 409570464.0000, BLEU-[2, 3, 4, 5] = [0.752, 0.537, 0.344, 0.218], NLL_gen = 0.7691, NLL_div = 0.7352, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 861.9158, neg_reward = 588.2819,
+[ADV-DIS] d_step 1: pos_reward = 1022.9269, neg_reward = 547.3219,
+[ADV-DIS] d_step 2: pos_reward = 1187.8594, neg_reward = 692.0542,
+[ADV-DIS] d_step 3: pos_reward = 1248.7625, neg_reward = 668.2820,
+-----
+ADV EPOCH 2
+-----
+[ADV-GEN]: g_loss = 175530240.0000, BLEU-[2, 3, 4, 5] = [0.752, 0.534, 0.344, 0.215], NLL_gen = 0.7791, NLL_div = 0.6926, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 1450.2820, neg_reward = 863.8410,
+[ADV-DIS] d_step 1: pos_reward = 1557.8420, neg_reward = 525.1680,
+[ADV-DIS] d_step 2: pos_reward = 1725.5769, neg_reward = 794.5715,
+[ADV-DIS] d_step 3: pos_reward = 1704.3755, neg_reward = 847.1707,
+-----
+ADV EPOCH 3
+-----
+[ADV-GEN]: g_loss = 137017296.0000, BLEU-[2, 3, 4, 5] = [0.781, 0.566, 0.363, 0.228], NLL_gen = 0.7909, NLL_div = 0.6877, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 2066.1101, neg_reward = 833.9266,
+[ADV-DIS] d_step 1: pos_reward = 2239.0898, neg_reward = 851.2006,
+[ADV-DIS] d_step 2: pos_reward = 1962.4125, neg_reward = 749.9576,
+[ADV-DIS] d_step 3: pos_reward = 2413.0342, neg_reward = 959.4257,
+-----
+ADV EPOCH 4
+-----
+[ADV-GEN]: g_loss = 183729392.0000, BLEU-[2, 3, 4, 5] = [0.78, 0.57, 0.37, 0.233], NLL_gen = 0.8044, NLL_div = 0.6384, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 2347.3650, neg_reward = 700.2092,
+[ADV-DIS] d_step 1: pos_reward = 2691.1348, neg_reward = 896.3414,
+[ADV-DIS] d_step 2: pos_reward = 2848.0020, neg_reward = 949.9275,
+[ADV-DIS] d_step 3: pos_reward = 3056.7041, neg_reward = 789.8433,
+-----
+ADV EPOCH 5
+-----
+[ADV-GEN]: g_loss = 167792160.0000, BLEU-[2, 3, 4, 5] = [0.768, 0.552, 0.359, 0.223], NLL_gen = 0.8178, NLL_div = 0.6398, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 3304.7583, neg_reward = 900.7564,
+[ADV-DIS] d_step 1: pos_reward = 3342.4424, neg_reward = 909.7616,
+[ADV-DIS] d_step 2: pos_reward = 3430.5361, neg_reward = 702.8446,
+[ADV-DIS] d_step 3: pos_reward = 3337.2334, neg_reward = 931.4877,
+-----
+ADV EPOCH 6
+-----
+[ADV-GEN]: g_loss = 251551808.0000, BLEU-[2, 3, 4, 5] = [0.789, 0.586, 0.388, 0.243], NLL_gen = 0.8307, NLL_div = 0.6248, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 3829.1917, neg_reward = 643.5254,
+[ADV-DIS] d_step 1: pos_reward = 3784.9878, neg_reward = 456.5184,
+[ADV-DIS] d_step 2: pos_reward = 3886.0576, neg_reward = 1400.9500,
+[ADV-DIS] d_step 3: pos_reward = 4297.5840, neg_reward = 1098.6970,
+-----
+ADV EPOCH 7
+-----
+[ADV-GEN]: g_loss = 76221664.0000, BLEU-[2, 3, 4, 5] = [0.788, 0.584, 0.389, 0.254], NLL_gen = 0.8436, NLL_div = 0.6065, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 4290.1772, neg_reward = 1094.3533,
+[ADV-DIS] d_step 1: pos_reward = 4566.1836, neg_reward = 1400.4209,
+[ADV-DIS] d_step 2: pos_reward = 4552.2930, neg_reward = 944.7806,
+[ADV-DIS] d_step 3: pos_reward = 4682.2041, neg_reward = 1132.9353,
+-----
+ADV EPOCH 8
+-----
+[ADV-GEN]: g_loss = 35737844.0000, BLEU-[2, 3, 4, 5] = [0.797, 0.598, 0.407, 0.259], NLL_gen = 0.8556, NLL_div = 0.592, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 4812.3818, neg_reward = 643.9982,
+[ADV-DIS] d_step 1: pos_reward = 4800.0195, neg_reward = 1028.4564,
+[ADV-DIS] d_step 2: pos_reward = 4954.8442, neg_reward = 804.3676,
+[ADV-DIS] d_step 3: pos_reward = 5311.1694, neg_reward = 1014.3987,
+-----
+ADV EPOCH 9
+-----
+[ADV-GEN]: g_loss = 687380224.0000, BLEU-[2, 3, 4, 5] = [0.793, 0.593, 0.395, 0.261], NLL_gen = 0.8669, NLL_div = 0.5681, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 5473.3574, neg_reward = 909.6083,
+[ADV-DIS] d_step 1: pos_reward = 5722.4263, neg_reward = 1183.7811,
+[ADV-DIS] d_step 2: pos_reward = 5779.1738, neg_reward = 1237.9207,
+[ADV-DIS] d_step 3: pos_reward = 5994.6299, neg_reward = 1035.1841,
+-----
+ADV EPOCH 10
+-----
+[ADV-GEN]: g_loss = 114075608.0000, BLEU-[2, 3, 4, 5] = [0.813, 0.622, 0.436, 0.287], NLL_gen = 0.8767, NLL_div = 0.557, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 6051.4336, neg_reward = 1011.7435,
+[ADV-DIS] d_step 1: pos_reward = 6102.0498, neg_reward = 1003.4814,
+[ADV-DIS] d_step 2: pos_reward = 6358.9180, neg_reward = 842.9010,
+[ADV-DIS] d_step 3: pos_reward = 6464.3643, neg_reward = 1388.2219,
+-----
+ADV EPOCH 11
+-----
+[ADV-GEN]: g_loss = 967818240.0000, BLEU-[2, 3, 4, 5] = [0.794, 0.601, 0.412, 0.268], NLL_gen = 0.8857, NLL_div = 0.542, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 6794.2412, neg_reward = 1382.0918,
+[ADV-DIS] d_step 1: pos_reward = 6846.0830, neg_reward = 976.0414,
+[ADV-DIS] d_step 2: pos_reward = 6985.6279, neg_reward = 875.8751,
+[ADV-DIS] d_step 3: pos_reward = 7132.5835, neg_reward = 1585.9777,
+-----
+ADV EPOCH 12
+-----
+[ADV-GEN]: g_loss = 788968576.0000, BLEU-[2, 3, 4, 5] = [0.814, 0.618, 0.413, 0.262], NLL_gen = 0.8945, NLL_div = 0.5382, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 7391.2432, neg_reward = 1204.5205,
+[ADV-DIS] d_step 1: pos_reward = 7545.2959, neg_reward = 904.6738,
+[ADV-DIS] d_step 2: pos_reward = 7653.6807, neg_reward = 1141.0244,
+[ADV-DIS] d_step 3: pos_reward = 7899.9658, neg_reward = 1652.3909,
+-----
+ADV EPOCH 13
+-----
+[ADV-GEN]: g_loss = 392311552.0000, BLEU-[2, 3, 4, 5] = [0.816, 0.627, 0.439, 0.292], NLL_gen = 0.9033, NLL_div = 0.5236, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 7990.0098, neg_reward = 1042.7688,
+[ADV-DIS] d_step 1: pos_reward = 8107.4893, neg_reward = 1012.9495,
+[ADV-DIS] d_step 2: pos_reward = 8219.7461, neg_reward = 944.3298,
+[ADV-DIS] d_step 3: pos_reward = 8484.0420, neg_reward = 1257.6299,
+-----
+ADV EPOCH 14
+-----
+[ADV-GEN]: g_loss = 226687312.0000, BLEU-[2, 3, 4, 5] = [0.804, 0.617, 0.428, 0.289], NLL_gen = 0.9115, NLL_div = 0.5195, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 8580.1611, neg_reward = 1262.1683,
+[ADV-DIS] d_step 1: pos_reward = 8749.0381, neg_reward = 952.1134,
+[ADV-DIS] d_step 2: pos_reward = 8779.3281, neg_reward = 1098.2367,
+[ADV-DIS] d_step 3: pos_reward = 9181.5898, neg_reward = 1200.0778,
+-----
+ADV EPOCH 15
+-----
+[ADV-GEN]: g_loss = 1471279744.0000, BLEU-[2, 3, 4, 5] = [0.81, 0.633, 0.457, 0.3], NLL_gen = 0.92, NLL_div = 0.4961, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 9214.9834, neg_reward = 1400.3953,
+[ADV-DIS] d_step 1: pos_reward = 9225.6758, neg_reward = 603.1512,
+[ADV-DIS] d_step 2: pos_reward = 9523.0098, neg_reward = 1572.5454,
+[ADV-DIS] d_step 3: pos_reward = 9555.2715, neg_reward = 1093.3657,
+-----
+ADV EPOCH 16
+-----
+[ADV-GEN]: g_loss = 352497376.0000, BLEU-[2, 3, 4, 5] = [0.801, 0.591, 0.403, 0.271], NLL_gen = 0.9285, NLL_div = 0.4972, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 9917.0977, neg_reward = 1551.1274,
+[ADV-DIS] d_step 1: pos_reward = 9957.1406, neg_reward = 1974.0253,
+[ADV-DIS] d_step 2: pos_reward = 9916.6260, neg_reward = 1456.4531,
+[ADV-DIS] d_step 3: pos_reward = 10230.5752, neg_reward = 836.6462,
+-----
+ADV EPOCH 17
+-----
+[ADV-GEN]: g_loss = 778358848.0000, BLEU-[2, 3, 4, 5] = [0.829, 0.653, 0.468, 0.319], NLL_gen = 0.9369, NLL_div = 0.4741, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 10403.3535, neg_reward = 669.2343,
+[ADV-DIS] d_step 1: pos_reward = 10410.1543, neg_reward = 1740.8066,
+[ADV-DIS] d_step 2: pos_reward = 10639.3682, neg_reward = 682.3451,
+[ADV-DIS] d_step 3: pos_reward = 10664.2539, neg_reward = 2075.5845,
+-----
+ADV EPOCH 18
+-----
+[ADV-GEN]: g_loss = 850988544.0000, BLEU-[2, 3, 4, 5] = [0.824, 0.641, 0.453, 0.298], NLL_gen = 0.946, NLL_div = 0.481, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 10945.6445, neg_reward = 1630.4385,
+[ADV-DIS] d_step 1: pos_reward = 11105.0537, neg_reward = 1904.3547,
+[ADV-DIS] d_step 2: pos_reward = 11068.4385, neg_reward = 1165.7446,
+[ADV-DIS] d_step 3: pos_reward = 11233.1738, neg_reward = 1445.3291,
+-----
+ADV EPOCH 19
+-----
+[ADV-GEN]: g_loss = 462923584.0000, BLEU-[2, 3, 4, 5] = [0.831, 0.649, 0.456, 0.307], NLL_gen = 0.9555, NLL_div = 0.4597, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 11526.4453, neg_reward = 870.2478,
+[ADV-DIS] d_step 1: pos_reward = 11657.5215, neg_reward = 1194.0667,
+[ADV-DIS] d_step 2: pos_reward = 11790.0625, neg_reward = 1295.6443,
+[ADV-DIS] d_step 3: pos_reward = 11919.1455, neg_reward = 1528.5248,
+-----
+ADV EPOCH 20
+-----
+[ADV-GEN]: g_loss = 1112942080.0000, BLEU-[2, 3, 4, 5] = [0.834, 0.658, 0.466, 0.319], NLL_gen = 0.9658, NLL_div = 0.4586, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 12094.9062, neg_reward = 1284.0776,
+[ADV-DIS] d_step 1: pos_reward = 12286.0898, neg_reward = 1029.1671,
+[ADV-DIS] d_step 2: pos_reward = 12097.5156, neg_reward = 1385.8040,
+[ADV-DIS] d_step 3: pos_reward = 12558.7959, neg_reward = 2234.3223,
+-----
+ADV EPOCH 21
+-----
+[ADV-GEN]: g_loss = 7370997.0000, BLEU-[2, 3, 4, 5] = [0.819, 0.64, 0.456, 0.315], NLL_gen = 0.9762, NLL_div = 0.4608, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 12696.5508, neg_reward = 1567.1262,
+[ADV-DIS] d_step 1: pos_reward = 12872.6514, neg_reward = 1327.8931,
+[ADV-DIS] d_step 2: pos_reward = 12988.6992, neg_reward = 1270.4836,
+[ADV-DIS] d_step 3: pos_reward = 13130.9443, neg_reward = 1003.0231,
+-----
+ADV EPOCH 22
+-----
+[ADV-GEN]: g_loss = 3278752.5000, BLEU-[2, 3, 4, 5] = [0.838, 0.669, 0.488, 0.337], NLL_gen = 0.9868, NLL_div = 0.4603, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 13257.9707, neg_reward = 659.5092,
+[ADV-DIS] d_step 1: pos_reward = 13461.0049, neg_reward = 1657.7117,
+[ADV-DIS] d_step 2: pos_reward = 13623.0059, neg_reward = 1581.1658,
+[ADV-DIS] d_step 3: pos_reward = 13686.2314, neg_reward = 753.7140,
+-----
+ADV EPOCH 23
+-----
+[ADV-GEN]: g_loss = 1151786624.0000, BLEU-[2, 3, 4, 5] = [0.827, 0.66, 0.485, 0.338], NLL_gen = 0.9978, NLL_div = 0.4356, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 14045.3535, neg_reward = 1172.1613,
+[ADV-DIS] d_step 1: pos_reward = 14206.2305, neg_reward = 683.8344,
+[ADV-DIS] d_step 2: pos_reward = 14162.2578, neg_reward = 1414.4767,
+[ADV-DIS] d_step 3: pos_reward = 14362.5439, neg_reward = 1744.2327,
+-----
+ADV EPOCH 24
+-----
+[ADV-GEN]: g_loss = 995021056.0000, BLEU-[2, 3, 4, 5] = [0.827, 0.646, 0.456, 0.311], NLL_gen = 1.0101, NLL_div = 0.4286, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 14470.6602, neg_reward = 1365.4069,
+[ADV-DIS] d_step 1: pos_reward = 14667.9375, neg_reward = 611.6084,
+[ADV-DIS] d_step 2: pos_reward = 14793.5391, neg_reward = 1051.7802,
+[ADV-DIS] d_step 3: pos_reward = 15149.9404, neg_reward = 1643.4810,
+-----
+ADV EPOCH 25
+-----
+[ADV-GEN]: g_loss = 602495744.0000, BLEU-[2, 3, 4, 5] = [0.831, 0.65, 0.455, 0.314], NLL_gen = 1.0216, NLL_div = 0.4092, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 15280.4297, neg_reward = 702.9832,
+[ADV-DIS] d_step 1: pos_reward = 15032.2129, neg_reward = 1303.2196,
+[ADV-DIS] d_step 2: pos_reward = 15369.7031, neg_reward = 1036.7623,
+[ADV-DIS] d_step 3: pos_reward = 15504.8242, neg_reward = 1172.1223,
+-----
+ADV EPOCH 26
+-----
+[ADV-GEN]: g_loss = 491153312.0000, BLEU-[2, 3, 4, 5] = [0.839, 0.672, 0.483, 0.322], NLL_gen = 1.0336, NLL_div = 0.4138, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 15623.4824, neg_reward = 1225.0852,
+[ADV-DIS] d_step 1: pos_reward = 15830.4775, neg_reward = 1087.5442,
+[ADV-DIS] d_step 2: pos_reward = 15971.1084, neg_reward = 1144.3420,
+[ADV-DIS] d_step 3: pos_reward = 16290.9141, neg_reward = 455.0448,
+-----
+ADV EPOCH 27
+-----
+[ADV-GEN]: g_loss = 993042368.0000, BLEU-[2, 3, 4, 5] = [0.834, 0.661, 0.483, 0.336], NLL_gen = 1.0451, NLL_div = 0.3953, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 16483.3320, neg_reward = 855.4654,
+[ADV-DIS] d_step 1: pos_reward = 16561.0742, neg_reward = 508.4875,
+[ADV-DIS] d_step 2: pos_reward = 16747.5977, neg_reward = 1006.5347,
+[ADV-DIS] d_step 3: pos_reward = 16872.6465, neg_reward = 1765.6243,
+-----
+ADV EPOCH 28
+-----
+[ADV-GEN]: g_loss = 30887496.0000, BLEU-[2, 3, 4, 5] = [0.843, 0.672, 0.484, 0.33], NLL_gen = 1.0568, NLL_div = 0.3915, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 17058.2793, neg_reward = 1538.4417,
+[ADV-DIS] d_step 1: pos_reward = 17201.1172, neg_reward = 797.9673,
+[ADV-DIS] d_step 2: pos_reward = 17320.4688, neg_reward = 1320.3857,
+[ADV-DIS] d_step 3: pos_reward = 17463.2871, neg_reward = 2054.2327,
+-----
+ADV EPOCH 29
+-----
+[ADV-GEN]: g_loss = 829059456.0000, BLEU-[2, 3, 4, 5] = [0.833, 0.671, 0.481, 0.33], NLL_gen = 1.0703, NLL_div = 0.3902, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 17632.7500, neg_reward = 826.8145,
+[ADV-DIS] d_step 1: pos_reward = 17788.2461, neg_reward = 1405.8551,
+[ADV-DIS] d_step 2: pos_reward = 17890.7227, neg_reward = 2395.9644,
+[ADV-DIS] d_step 3: pos_reward = 18023.9609, neg_reward = 691.6677,
+-----
+ADV EPOCH 30
+-----
+[ADV-GEN]: g_loss = 4279545344.0000, BLEU-[2, 3, 4, 5] = [0.841, 0.698, 0.538, 0.39], NLL_gen = 1.0832, NLL_div = 0.3748, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 17994.1055, neg_reward = 462.0286,
+[ADV-DIS] d_step 1: pos_reward = 18341.7695, neg_reward = 1095.5647,
+[ADV-DIS] d_step 2: pos_reward = 18288.5664, neg_reward = 1707.8127,
+[ADV-DIS] d_step 3: pos_reward = 18647.9414, neg_reward = 1322.4420,
+-----
+ADV EPOCH 31
+-----
+[ADV-GEN]: g_loss = 6709986.5000, BLEU-[2, 3, 4, 5] = [0.861, 0.713, 0.539, 0.376], NLL_gen = 1.0949, NLL_div = 0.3716, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 18839.9648, neg_reward = 854.0455,
+[ADV-DIS] d_step 1: pos_reward = 19024.7754, neg_reward = 1073.9301,
+[ADV-DIS] d_step 2: pos_reward = 18870.7383, neg_reward = 1823.1031,
+[ADV-DIS] d_step 3: pos_reward = 19284.7051, neg_reward = 1291.3167,
+-----
+ADV EPOCH 32
+-----
+[ADV-GEN]: g_loss = 1079771136.0000, BLEU-[2, 3, 4, 5] = [0.865, 0.715, 0.53, 0.373], NLL_gen = 1.1074, NLL_div = 0.3601, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 19126.7617, neg_reward = 1685.1123,
+[ADV-DIS] d_step 1: pos_reward = 19547.2949, neg_reward = 1887.7004,
+[ADV-DIS] d_step 2: pos_reward = 19348.9688, neg_reward = 853.2839,
+[ADV-DIS] d_step 3: pos_reward = 19258.3008, neg_reward = 983.2007,
+-----
+ADV EPOCH 33
+-----
+[ADV-GEN]: g_loss = 1921803520.0000, BLEU-[2, 3, 4, 5] = [0.859, 0.715, 0.533, 0.375], NLL_gen = 1.1193, NLL_div = 0.3586, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 19929.4414, neg_reward = 1746.7433,
+[ADV-DIS] d_step 1: pos_reward = 19869.8594, neg_reward = 1187.5000,
+[ADV-DIS] d_step 2: pos_reward = 20284.3965, neg_reward = 495.8848,
+[ADV-DIS] d_step 3: pos_reward = 20431.9492, neg_reward = 991.9788,
+-----
+ADV EPOCH 34
+-----
+[ADV-GEN]: g_loss = 1134606.8750, BLEU-[2, 3, 4, 5] = [0.848, 0.692, 0.51, 0.362], NLL_gen = 1.1309, NLL_div = 0.3461, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 20345.5703, neg_reward = 1276.2258,
+[ADV-DIS] d_step 1: pos_reward = 20419.9844, neg_reward = 538.8644,
+[ADV-DIS] d_step 2: pos_reward = 20887.1172, neg_reward = 589.9636,
+[ADV-DIS] d_step 3: pos_reward = 21038.4492, neg_reward = 2199.8003,
+-----
+ADV EPOCH 35
+-----
+[ADV-GEN]: g_loss = 4473526784.0000, BLEU-[2, 3, 4, 5] = [0.875, 0.744, 0.567, 0.403], NLL_gen = 1.1431, NLL_div = 0.3358, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 21182.5957, neg_reward = 250.3604,
+[ADV-DIS] d_step 1: pos_reward = 21392.9551, neg_reward = 812.8297,
+[ADV-DIS] d_step 2: pos_reward = 21535.7441, neg_reward = 1007.6909,
+[ADV-DIS] d_step 3: pos_reward = 21607.6094, neg_reward = 1576.8491,
+-----
+ADV EPOCH 36
+-----
+[ADV-GEN]: g_loss = 2827614720.0000, BLEU-[2, 3, 4, 5] = [0.875, 0.735, 0.553, 0.387], NLL_gen = 1.1557, NLL_div = 0.3311, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 21789.0781, neg_reward = 2262.8716,
+[ADV-DIS] d_step 1: pos_reward = 21651.4570, neg_reward = 2105.2957,
+[ADV-DIS] d_step 2: pos_reward = 21809.5977, neg_reward = 183.4230,
+[ADV-DIS] d_step 3: pos_reward = 21943.1328, neg_reward = 649.4563,
+-----
+ADV EPOCH 37
+-----
+[ADV-GEN]: g_loss = 1064389504.0000, BLEU-[2, 3, 4, 5] = [0.87, 0.739, 0.566, 0.405], NLL_gen = 1.1672, NLL_div = 0.3301, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 22094.3789, neg_reward = 953.7104,
+[ADV-DIS] d_step 1: pos_reward = 22548.8027, neg_reward = 1378.8927,
+[ADV-DIS] d_step 2: pos_reward = 22741.5000, neg_reward = 1800.9215,
+[ADV-DIS] d_step 3: pos_reward = 22833.8457, neg_reward = 642.9138,
+-----
+ADV EPOCH 38
+-----
+[ADV-GEN]: g_loss = 792020608.0000, BLEU-[2, 3, 4, 5] = [0.866, 0.734, 0.561, 0.399], NLL_gen = 1.1758, NLL_div = 0.3231, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 22658.7969, neg_reward = 587.2483,
+[ADV-DIS] d_step 1: pos_reward = 23120.1914, neg_reward = 1385.9927,
+[ADV-DIS] d_step 2: pos_reward = 23282.8516, neg_reward = 1682.1394,
+[ADV-DIS] d_step 3: pos_reward = 23407.8047, neg_reward = 308.8159,
+-----
+ADV EPOCH 39
+-----
+[ADV-GEN]: g_loss = 2597912064.0000, BLEU-[2, 3, 4, 5] = [0.863, 0.724, 0.548, 0.398], NLL_gen = 1.1838, NLL_div = 0.3181, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 23574.4688, neg_reward = 2171.3455,
+[ADV-DIS] d_step 1: pos_reward = 23730.7988, neg_reward = 1064.7269,
+[ADV-DIS] d_step 2: pos_reward = 23859.4902, neg_reward = 1027.6959,
+[ADV-DIS] d_step 3: pos_reward = 24004.7559, neg_reward = 1018.6993,
+-----
+ADV EPOCH 40
+-----
+[ADV-GEN]: g_loss = 1933973504.0000, BLEU-[2, 3, 4, 5] = [0.866, 0.735, 0.554, 0.379], NLL_gen = 1.1906, NLL_div = 0.3116, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 23817.7305, neg_reward = 1043.0021,
+[ADV-DIS] d_step 1: pos_reward = 24297.5684, neg_reward = 1396.8312,
+[ADV-DIS] d_step 2: pos_reward = 24090.8633, neg_reward = 950.0715,
+[ADV-DIS] d_step 3: pos_reward = 24318.0254, neg_reward = 2264.1519,
+-----
+ADV EPOCH 41
+-----
+[ADV-GEN]: g_loss = 3483214080.0000, BLEU-[2, 3, 4, 5] = [0.872, 0.743, 0.563, 0.39], NLL_gen = 1.1981, NLL_div = 0.3063, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 24727.5625, neg_reward = 1546.3550,
+[ADV-DIS] d_step 1: pos_reward = 24889.5273, neg_reward = 397.0335,
+[ADV-DIS] d_step 2: pos_reward = 25085.5781, neg_reward = 1091.6652,
+[ADV-DIS] d_step 3: pos_reward = 25232.6875, neg_reward = 1866.9297,
+-----
+ADV EPOCH 42
+-----
+[ADV-GEN]: g_loss = 1248250240.0000, BLEU-[2, 3, 4, 5] = [0.872, 0.73, 0.559, 0.399], NLL_gen = 1.2057, NLL_div = 0.3171, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 25366.7266, neg_reward = 1155.9075,
+[ADV-DIS] d_step 1: pos_reward = 25520.4590, neg_reward = 2715.7456,
+[ADV-DIS] d_step 2: pos_reward = 25698.3652, neg_reward = 1315.7460,
+[ADV-DIS] d_step 3: pos_reward = 25802.2773, neg_reward = 2065.6499,
+-----
+ADV EPOCH 43
+-----
+[ADV-GEN]: g_loss = 44278296.0000, BLEU-[2, 3, 4, 5] = [0.867, 0.739, 0.573, 0.408], NLL_gen = 1.2138, NLL_div = 0.2976, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 25981.4375, neg_reward = 1464.0276,
+[ADV-DIS] d_step 1: pos_reward = 26125.6387, neg_reward = 895.2854,
+[ADV-DIS] d_step 2: pos_reward = 26255.5742, neg_reward = 408.1692,
+[ADV-DIS] d_step 3: pos_reward = 26362.7539, neg_reward = 394.1414,
+-----
+ADV EPOCH 44
+-----
+[ADV-GEN]: g_loss = 2292495104.0000, BLEU-[2, 3, 4, 5] = [0.876, 0.748, 0.571, 0.401], NLL_gen = 1.2196, NLL_div = 0.3036, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 26576.9336, neg_reward = 335.1700,
+[ADV-DIS] d_step 1: pos_reward = 26728.4551, neg_reward = 2075.1343,
+[ADV-DIS] d_step 2: pos_reward = 26847.1074, neg_reward = 2121.0417,
+[ADV-DIS] d_step 3: pos_reward = 27013.6641, neg_reward = 2056.5549,
+-----
+ADV EPOCH 45
+-----
+[ADV-GEN]: g_loss = 4463787008.0000, BLEU-[2, 3, 4, 5] = [0.884, 0.77, 0.602, 0.425], NLL_gen = 1.2241, NLL_div = 0.2973, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 26795.3789, neg_reward = 806.0090,
+[ADV-DIS] d_step 1: pos_reward = 26922.1914, neg_reward = 791.4522,
+[ADV-DIS] d_step 2: pos_reward = 27060.5273, neg_reward = 790.0250,
+[ADV-DIS] d_step 3: pos_reward = 27548.6504, neg_reward = 1724.9464,
+-----
+ADV EPOCH 46
+-----
+[ADV-GEN]: g_loss = 1951605376.0000, BLEU-[2, 3, 4, 5] = [0.883, 0.762, 0.592, 0.423], NLL_gen = 1.2283, NLL_div = 0.3028, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 27746.3555, neg_reward = 1207.5450,
+[ADV-DIS] d_step 1: pos_reward = 27872.7637, neg_reward = 1232.4451,
+[ADV-DIS] d_step 2: pos_reward = 27976.5371, neg_reward = 859.0599,
+[ADV-DIS] d_step 3: pos_reward = 28147.8672, neg_reward = 1128.2065,
+-----
+ADV EPOCH 47
+-----
+[ADV-GEN]: g_loss = 1495173376.0000, BLEU-[2, 3, 4, 5] = [0.882, 0.768, 0.603, 0.425], NLL_gen = 1.2324, NLL_div = 0.307, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 28270.7148, neg_reward = 1201.8636,
+[ADV-DIS] d_step 1: pos_reward = 28068.4648, neg_reward = 2120.3850,
+[ADV-DIS] d_step 2: pos_reward = 28213.3516, neg_reward = 1217.2241,
+[ADV-DIS] d_step 3: pos_reward = 28717.4668, neg_reward = 436.3246,
+-----
+ADV EPOCH 48
+-----
+[ADV-GEN]: g_loss = 1332181120.0000, BLEU-[2, 3, 4, 5] = [0.888, 0.761, 0.593, 0.407], NLL_gen = 1.2361, NLL_div = 0.2984, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 28892.6328, neg_reward = 306.1014,
+[ADV-DIS] d_step 1: pos_reward = 29042.6602, neg_reward = 658.1851,
+[ADV-DIS] d_step 2: pos_reward = 28825.3164, neg_reward = 848.9021,
+[ADV-DIS] d_step 3: pos_reward = 29352.9941, neg_reward = 1771.3866,
+-----
+ADV EPOCH 49
+-----
+[ADV-GEN]: g_loss = 6910341.0000, BLEU-[2, 3, 4, 5] = [0.879, 0.768, 0.598, 0.426], NLL_gen = 1.2398, NLL_div = 0.2925, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 29132.2949, neg_reward = 1162.9357,
+[ADV-DIS] d_step 1: pos_reward = 29285.9766, neg_reward = 924.1478,
+[ADV-DIS] d_step 2: pos_reward = 29426.1504, neg_reward = 1690.6163,
+[ADV-DIS] d_step 3: pos_reward = 29576.2227, neg_reward = 917.0813,
+-----
+ADV EPOCH 50
+-----
+[ADV-GEN]: g_loss = 5070086656.0000, BLEU-[2, 3, 4, 5] = [0.898, 0.792, 0.612, 0.424], NLL_gen = 1.2437, NLL_div = 0.2898, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 30084.6953, neg_reward = 306.7145,
+[ADV-DIS] d_step 1: pos_reward = 29871.7539, neg_reward = 2269.4475,
+[ADV-DIS] d_step 2: pos_reward = 30019.0234, neg_reward = 1642.0415,
+[ADV-DIS] d_step 3: pos_reward = 30113.9141, neg_reward = 2312.9229,
+-----
+ADV EPOCH 51
+-----
+[ADV-GEN]: g_loss = 6506055168.0000, BLEU-[2, 3, 4, 5] = [0.889, 0.782, 0.612, 0.429], NLL_gen = 1.2481, NLL_div = 0.2906, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 30624.4805, neg_reward = 1471.0354,
+[ADV-DIS] d_step 1: pos_reward = 30783.8242, neg_reward = 1318.5392,
+[ADV-DIS] d_step 2: pos_reward = 30911.6289, neg_reward = 910.8024,
+[ADV-DIS] d_step 3: pos_reward = 31064.2539, neg_reward = 2220.6489,
+-----
+ADV EPOCH 52
+-----
+[ADV-GEN]: g_loss = 3375866880.0000, BLEU-[2, 3, 4, 5] = [0.893, 0.781, 0.605, 0.41], NLL_gen = 1.2524, NLL_div = 0.2878, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 30800.5762, neg_reward = 1902.6578,
+[ADV-DIS] d_step 1: pos_reward = 31325.9766, neg_reward = 1328.6898,
+[ADV-DIS] d_step 2: pos_reward = 31512.7109, neg_reward = 1781.6465,
+[ADV-DIS] d_step 3: pos_reward = 31259.7539, neg_reward = 547.5499,
+-----
+ADV EPOCH 53
+-----
+[ADV-GEN]: g_loss = 4533129216.0000, BLEU-[2, 3, 4, 5] = [0.896, 0.79, 0.617, 0.427], NLL_gen = 1.2562, NLL_div = 0.2891, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 31804.3691, neg_reward = 1476.8092,
+[ADV-DIS] d_step 1: pos_reward = 31506.7402, neg_reward = 330.9987,
+[ADV-DIS] d_step 2: pos_reward = 32010.4492, neg_reward = 3408.3931,
+[ADV-DIS] d_step 3: pos_reward = 32157.1504, neg_reward = 780.0039,
+-----
+ADV EPOCH 54
+-----
+[ADV-GEN]: g_loss = 173632736.0000, BLEU-[2, 3, 4, 5] = [0.884, 0.764, 0.581, 0.397], NLL_gen = 1.2613, NLL_div = 0.2967, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 32297.3125, neg_reward = 821.8531,
+[ADV-DIS] d_step 1: pos_reward = 32480.9062, neg_reward = 1782.9205,
+[ADV-DIS] d_step 2: pos_reward = 32638.9629, neg_reward = 840.4513,
+[ADV-DIS] d_step 3: pos_reward = 32829.7031, neg_reward = 1787.5674,
+-----
+ADV EPOCH 55
+-----
+[ADV-GEN]: g_loss = 1478029184.0000, BLEU-[2, 3, 4, 5] = [0.9, 0.792, 0.614, 0.431], NLL_gen = 1.267, NLL_div = 0.2855, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 32499.4355, neg_reward = 1367.7283,
+[ADV-DIS] d_step 1: pos_reward = 32643.6836, neg_reward = 773.8322,
+[ADV-DIS] d_step 2: pos_reward = 33188.6523, neg_reward = 933.8345,
+[ADV-DIS] d_step 3: pos_reward = 33361.1172, neg_reward = 1483.6644,
+-----
+ADV EPOCH 56
+-----
+[ADV-GEN]: g_loss = 2647700224.0000, BLEU-[2, 3, 4, 5] = [0.882, 0.77, 0.594, 0.415], NLL_gen = 1.2722, NLL_div = 0.2709, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 33493.2344, neg_reward = 347.7794,
+[ADV-DIS] d_step 1: pos_reward = 33620.5312, neg_reward = 480.9021,
+[ADV-DIS] d_step 2: pos_reward = 33341.9922, neg_reward = 1885.0745,
+[ADV-DIS] d_step 3: pos_reward = 33903.0312, neg_reward = 806.1530,
+-----
+ADV EPOCH 57
+-----
+[ADV-GEN]: g_loss = 1229229184.0000, BLEU-[2, 3, 4, 5] = [0.886, 0.775, 0.608, 0.419], NLL_gen = 1.2778, NLL_div = 0.2887, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 33589.7109, neg_reward = 1650.1461,
+[ADV-DIS] d_step 1: pos_reward = 34217.8242, neg_reward = 787.6486,
+[ADV-DIS] d_step 2: pos_reward = 33900.6406, neg_reward = 887.1509,
+[ADV-DIS] d_step 3: pos_reward = 34463.1602, neg_reward = 444.4647,
+-----
+ADV EPOCH 58
+-----
+[ADV-GEN]: g_loss = 5125027840.0000, BLEU-[2, 3, 4, 5] = [0.896, 0.779, 0.604, 0.426], NLL_gen = 1.282, NLL_div = 0.2731, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 34181.9102, neg_reward = 532.4180,
+[ADV-DIS] d_step 1: pos_reward = 34739.8984, neg_reward = 452.2249,
+[ADV-DIS] d_step 2: pos_reward = 34882.5391, neg_reward = 1140.8364,
+[ADV-DIS] d_step 3: pos_reward = 35002.0000, neg_reward = 777.8450,
+-----
+ADV EPOCH 59
+-----
+[ADV-GEN]: g_loss = 4328461824.0000, BLEU-[2, 3, 4, 5] = [0.898, 0.793, 0.609, 0.432], NLL_gen = 1.2859, NLL_div = 0.2766, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 34714.3750, neg_reward = 1599.3107,
+[ADV-DIS] d_step 1: pos_reward = 35290.4102, neg_reward = 648.2041,
+[ADV-DIS] d_step 2: pos_reward = 35424.7852, neg_reward = 867.1769,
+[ADV-DIS] d_step 3: pos_reward = 35582.1641, neg_reward = 663.8326,
+-----
+ADV EPOCH 60
+-----
+[ADV-GEN]: g_loss = 2942845184.0000, BLEU-[2, 3, 4, 5] = [0.893, 0.788, 0.614, 0.43], NLL_gen = 1.2898, NLL_div = 0.2753, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 35699.6953, neg_reward = 1590.9437,
+[ADV-DIS] d_step 1: pos_reward = 35884.3125, neg_reward = 1650.6647,
+[ADV-DIS] d_step 2: pos_reward = 35500.1758, neg_reward = 873.4717,
+[ADV-DIS] d_step 3: pos_reward = 36150.2969, neg_reward = 1600.0094,
+-----
+ADV EPOCH 61
+-----
+[ADV-GEN]: g_loss = 4011984384.0000, BLEU-[2, 3, 4, 5] = [0.902, 0.796, 0.61, 0.418], NLL_gen = 1.2945, NLL_div = 0.2811, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 36267.2812, neg_reward = 468.2781,
+[ADV-DIS] d_step 1: pos_reward = 36404.6172, neg_reward = 2293.4546,
+[ADV-DIS] d_step 2: pos_reward = 36535.8047, neg_reward = 1096.1721,
+[ADV-DIS] d_step 3: pos_reward = 36671.8047, neg_reward = 1034.8882,
+-----
+ADV EPOCH 62
+-----
+[ADV-GEN]: g_loss = 237961424.0000, BLEU-[2, 3, 4, 5] = [0.897, 0.791, 0.61, 0.425], NLL_gen = 1.299, NLL_div = 0.274, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 36857.7891, neg_reward = 1596.3773,
+[ADV-DIS] d_step 1: pos_reward = 36929.1719, neg_reward = 1690.3236,
+[ADV-DIS] d_step 2: pos_reward = 37098.3477, neg_reward = 1571.7407,
+[ADV-DIS] d_step 3: pos_reward = 37246.2891, neg_reward = 1646.8167,
+-----
+ADV EPOCH 63
+-----
+[ADV-GEN]: g_loss = 10753554432.0000, BLEU-[2, 3, 4, 5] = [0.899, 0.797, 0.612, 0.422], NLL_gen = 1.3042, NLL_div = 0.2804, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 37353.3672, neg_reward = 354.9716,
+[ADV-DIS] d_step 1: pos_reward = 37018.5938, neg_reward = 884.6218,
+[ADV-DIS] d_step 2: pos_reward = 37632.5547, neg_reward = 1210.8447,
+[ADV-DIS] d_step 3: pos_reward = 37753.0391, neg_reward = 439.7111,
+-----
+ADV EPOCH 64
+-----
+[ADV-GEN]: g_loss = 140558400.0000, BLEU-[2, 3, 4, 5] = [0.896, 0.795, 0.619, 0.434], NLL_gen = 1.3088, NLL_div = 0.2739, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 37869.9453, neg_reward = 455.2336,
+[ADV-DIS] d_step 1: pos_reward = 38017.0156, neg_reward = 1178.5762,
+[ADV-DIS] d_step 2: pos_reward = 38224.6289, neg_reward = 1717.7830,
+[ADV-DIS] d_step 3: pos_reward = 38372.3203, neg_reward = 958.1876,
+-----
+ADV EPOCH 65
+-----
+[ADV-GEN]: g_loss = 6014913536.0000, BLEU-[2, 3, 4, 5] = [0.881, 0.763, 0.579, 0.394], NLL_gen = 1.3118, NLL_div = 0.2703, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 38533.4883, neg_reward = 935.6229,
+[ADV-DIS] d_step 1: pos_reward = 38655.8281, neg_reward = 384.7843,
+[ADV-DIS] d_step 2: pos_reward = 38764.2383, neg_reward = 1125.5048,
+[ADV-DIS] d_step 3: pos_reward = 38920.0469, neg_reward = 1279.5443,
+-----
+ADV EPOCH 66
+-----
+[ADV-GEN]: g_loss = 6640745472.0000, BLEU-[2, 3, 4, 5] = [0.893, 0.784, 0.604, 0.402], NLL_gen = 1.3135, NLL_div = 0.2719, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 39042.9258, neg_reward = 1930.3451,
+[ADV-DIS] d_step 1: pos_reward = 39189.4922, neg_reward = 911.9370,
+[ADV-DIS] d_step 2: pos_reward = 39316.0234, neg_reward = 1640.9998,
+[ADV-DIS] d_step 3: pos_reward = 39452.9453, neg_reward = 2198.0435,
+-----
+ADV EPOCH 67
+-----
+[ADV-GEN]: g_loss = 6017883648.0000, BLEU-[2, 3, 4, 5] = [0.891, 0.787, 0.616, 0.439], NLL_gen = 1.3158, NLL_div = 0.2734, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 39578.1094, neg_reward = 1609.1110,
+[ADV-DIS] d_step 1: pos_reward = 39716.5859, neg_reward = 469.7216,
+[ADV-DIS] d_step 2: pos_reward = 39879.2578, neg_reward = 1004.6758,
+[ADV-DIS] d_step 3: pos_reward = 40001.8047, neg_reward = 1577.6385,
+-----
+ADV EPOCH 68
+-----
+[ADV-GEN]: g_loss = 7254091264.0000, BLEU-[2, 3, 4, 5] = [0.9, 0.795, 0.613, 0.425], NLL_gen = 1.3192, NLL_div = 0.2684, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 40105.5664, neg_reward = 1413.4036,
+[ADV-DIS] d_step 1: pos_reward = 40258.9141, neg_reward = 718.8807,
+[ADV-DIS] d_step 2: pos_reward = 40397.3008, neg_reward = 2484.4124,
+[ADV-DIS] d_step 3: pos_reward = 40551.6250, neg_reward = 1764.7214,
+-----
+ADV EPOCH 69
+-----
+[ADV-GEN]: g_loss = 12993440768.0000, BLEU-[2, 3, 4, 5] = [0.906, 0.798, 0.619, 0.429], NLL_gen = 1.3234, NLL_div = 0.2596, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 40701.4375, neg_reward = 1732.8245,
+[ADV-DIS] d_step 1: pos_reward = 40835.4180, neg_reward = 2275.8025,
+[ADV-DIS] d_step 2: pos_reward = 41003.0938, neg_reward = 951.1820,
+[ADV-DIS] d_step 3: pos_reward = 41116.4727, neg_reward = 3607.7959,
+-----
+ADV EPOCH 70
+-----
+[ADV-GEN]: g_loss = 1457062016.0000, BLEU-[2, 3, 4, 5] = [0.902, 0.798, 0.624, 0.427], NLL_gen = 1.3295, NLL_div = 0.2593, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 41271.8164, neg_reward = 604.1643,
+[ADV-DIS] d_step 1: pos_reward = 41416.6562, neg_reward = 239.5617,
+[ADV-DIS] d_step 2: pos_reward = 41559.6758, neg_reward = 2305.8972,
+[ADV-DIS] d_step 3: pos_reward = 41641.0938, neg_reward = 600.6663,
+-----
+ADV EPOCH 71
+-----
+[ADV-GEN]: g_loss = 12912224256.0000, BLEU-[2, 3, 4, 5] = [0.91, 0.808, 0.636, 0.436], NLL_gen = 1.3363, NLL_div = 0.2603, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 41816.1250, neg_reward = 1305.4491,
+[ADV-DIS] d_step 1: pos_reward = 42006.6133, neg_reward = 899.5536,
+[ADV-DIS] d_step 2: pos_reward = 42132.4766, neg_reward = 4342.0850,
+[ADV-DIS] d_step 3: pos_reward = 42229.9414, neg_reward = 427.1238,
+-----
+ADV EPOCH 72
+-----
+[ADV-GEN]: g_loss = 210837632.0000, BLEU-[2, 3, 4, 5] = [0.903, 0.799, 0.63, 0.438], NLL_gen = 1.3419, NLL_div = 0.254, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 42395.7891, neg_reward = 357.8853,
+[ADV-DIS] d_step 1: pos_reward = 42545.0469, neg_reward = 3266.4453,
+[ADV-DIS] d_step 2: pos_reward = 42694.0703, neg_reward = 460.4413,
+[ADV-DIS] d_step 3: pos_reward = 42870.4375, neg_reward = 1153.0945,
+-----
+ADV EPOCH 73
+-----
+[ADV-GEN]: g_loss = 243686976.0000, BLEU-[2, 3, 4, 5] = [0.908, 0.816, 0.65, 0.459], NLL_gen = 1.3502, NLL_div = 0.2444, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 43040.6875, neg_reward = 355.2350,
+[ADV-DIS] d_step 1: pos_reward = 43190.6328, neg_reward = 1724.1117,
+[ADV-DIS] d_step 2: pos_reward = 43319.9922, neg_reward = 935.4380,
+[ADV-DIS] d_step 3: pos_reward = 43475.3672, neg_reward = 475.9227,
+-----
+ADV EPOCH 74
+-----
+[ADV-GEN]: g_loss = 9639160832.0000, BLEU-[2, 3, 4, 5] = [0.904, 0.802, 0.633, 0.446], NLL_gen = 1.3594, NLL_div = 0.2466, Self-BLEU-[2, 3, 4] = 0, [PPL-F, PPL-R] = 0
+[ADV-DIS] d_step 0: pos_reward = 43616.6094, neg_reward = 542.8149,
+[ADV-DIS] d_step 1: pos_reward = 43748.0781, neg_reward = 2520.1365,
+[ADV-DIS] d_step 2: pos_reward = 43865.0508, neg_reward = 346.7638,
+[ADV-DIS] d_step 3: pos_reward = 44013.6562, neg_reward = 1210.5999,
+-----
+ADV EPOCH 75
+-----

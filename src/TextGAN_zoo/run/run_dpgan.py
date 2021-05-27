@@ -35,7 +35,7 @@ scriptname = 'main.py'
 # ===Program===
 if_test = int(False)
 run_model = 'dpgan'
-CUDA = int(False)
+CUDA = int(True)
 oracle_pretrain = int(False)
 gen_pretrain = int(False)
 dis_pretrain = int(False)
@@ -44,7 +44,7 @@ ADV_train_epoch = 200
 tips = 'DPGAN experiments'
 
 # ===Oracle  or Real===
-if_real_data = [int(False), int(False), int(True)]
+if_real_data = [int(False), int(True), int(True)]
 dataset = ['oracle', 'image_coco', 'emnlp_news']
 vocab_size = [5000, 0, 0]
 
