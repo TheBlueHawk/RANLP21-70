@@ -252,10 +252,16 @@ class TransformerGenerator(nn.Module):
             if self.gpu:
                 dummy_tgt = dummy_tgt.cuda()
             
-            output = self.forward(inp, dummy_tgt)  # [max_seq_len * batch_size, vocab_size]
+            target = torch.zeros(inp.size()).long()
+            target[:, cfg.max_seq_len-1] = cfg.padding_idx
+            target[:, 0:cfg.max_seq_len - 1] = inp[:, 1:cfg.max_seq_len]
+            if self.gpu:
+                target = target.cuda()
             
-            #print(f"Output after forward: {output}")
-            #print(f"Dummy_tgt after forward: {dummy_tgt}")
+            output = self.forward(dummy_tgt, inp)  # [max_seq_len * batch_size, vocab_size]
+            
+            print(f"Output after forward {output.size()}: {output}")
+            print(f"input after forward: {inp}")
                
 
             #Done in forward pass 

@@ -25,9 +25,15 @@ class SA_DPGAN_D(TransformerGenerator):
         if self.gpu:
             dummy_tgt = dummy_tgt.cuda()
 
-        pred = self.forward(inp, dummy_tgt)
+        pred = self.forward(target, inp)
 
         word_reward = F.nll_loss(pred, target.contiguous().view(-1), reduction='none').view(batch_size, -1)
         sentence_reward = torch.mean(word_reward, dim=-1, keepdim=True)
+
+        #print(f"word reward len: {word_reward.size()} {word_reward}")
+        #print(f"word reward: {word_reward}")
+
+        #print(f"sentence reward len: {sentence_reward.size()}")
+        #print(f"sentence reward:{sentence_reward}")
 
         return word_reward, sentence_reward

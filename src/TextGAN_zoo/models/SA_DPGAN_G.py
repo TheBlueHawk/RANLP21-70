@@ -2,6 +2,7 @@ import torch
 import torch.nn.functional as F
 
 from models.generator import TransformerGenerator
+import config as cfg
 
 
 class SA_DPGAN_G(TransformerGenerator):
@@ -24,7 +25,13 @@ class SA_DPGAN_G(TransformerGenerator):
         if self.gpu:
             dummy_tgt = dummy_tgt.cuda()
 
-        pred = self.forward(inp, dummy_tgt)
+        target = torch.zeros(inp.size()).long()
+        target[:, cfg.max_seq_len] = cfg.padding_idx
+        target[:, 0:cfg.max_seq_len - 1] = inp[:, 1:cfg.max_seq_len]
+        if self.gpu:
+            target = target.cuda()
+
+        pred = self.forward(target, inp)
 
 
         samples = torch.argmax(pred, dim=-1).view(batch_size, -1)

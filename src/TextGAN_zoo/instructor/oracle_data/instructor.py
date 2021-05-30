@@ -349,7 +349,9 @@ class SelfAttentionInstructor:
 
             model.init_weights()
             dummy_tgt = torch.ones_like(target)
-            pred = model.forward(inp, dummy_tgt)  # [max_seq_len * batch_size, vocab_size]
+            
+
+            pred = model.forward(target, inp)  # [max_seq_len * batch_size, vocab_size]
            
             loss = criterion(pred, target.view(-1))
             self.optimize(optimizer, loss, model)
