@@ -129,6 +129,14 @@ class LSTMGenerator(nn.Module):
             return h, c
 
 
+
+
+
+
+
+
+
+
 # code adapted from https://pytorch.org/tutorials/beginner/transformer_tutorial.html
 class TransformerGenerator(nn.Module):
 
@@ -260,8 +268,8 @@ class TransformerGenerator(nn.Module):
             
             output = self.forward(dummy_tgt, inp)  # [max_seq_len * batch_size, vocab_size]
             
-            print(f"Output after forward {output.size()}: {output}")
-            print(f"input after forward: {inp}")
+            #print(f"Output after forward {output.size()}: {output}")
+            #print(f"input after forward: {inp}")
                
 
             #Done in forward pass 
@@ -277,6 +285,58 @@ class TransformerGenerator(nn.Module):
             #print(f"Output after reshape: {output.size()}")
 
             samples[b * batch_size : (b + 1) * batch_size] = output
+
+        samples = samples[:num_samples]
+        #print(samples)
+        return samples 
+
+    "Still need to be perfected "
+    def new_sample(self, num_samples, batch_size, start_letter=cfg.start_letter):
+        """
+        Samples the network and returns num_samples samples of length max_seq_len.
+        :return samples: num_samples * max_seq_length (a sampled sequence in each row)
+        """
+        num_batch = num_samples // batch_size + 1 if num_samples != batch_size else 1
+        samples = torch.zeros(num_batch * batch_size, self.max_seq_len).long()
+
+        # Generate sentences with multinomial sampling strategy
+        for b in range(num_batch):
+            smpl = torch.LongTensor([start_letter] * batch_size).view(-1,1)
+            if self.gpu:
+                smpl = smpl.cuda()
+            random_encoder_out = torch.rand(self.max_seq_len, batch_size, self.hidden_dim)
+            if self.gpu:
+                random_encoder_out = random_encoder_out.cuda()
+
+            for i in range(self.max_seq_len-1):
+                if self.trg_mask is None or self.trg_mask.size(0) != len(smpl):
+                    self.trg_mask = self.generate_square_subsequent_mask(len(smpl)).to(smpl.device)
+                trg_pad_mask= self.make_len_mask(smpl)
+                tgt = self.embedding(smpl)
+                tgt = self.pos_encoder(tgt)
+
+                output = self.transformer_decoder(
+                    tgt=tgt, 
+                    memory=random_encoder_out, 
+                    tgt_mask=self.trg_mask,
+                    tgt_key_padding_mask = trg_pad_mask)
+                output = self.fc_out(output)
+                output = self.softmax(output)
+                output = output[-1] # the last timestep
+                values, indices = output.max(dim=-1)
+                indices = indices.view(-1, 1)
+                #print(f"indices: {indices}")
+                #print(f"smpl size: {smpl.size()}")
+                #print(f"indices size: {indices.size()}")
+                smpl = torch.cat((smpl, indices),0)              
+              
+            #Reshape to fit samples
+            #print(f"smpl size: {smpl.size()}")
+            smpl = smpl.reshape(batch_size, self.max_seq_len)
+            #print(f"Output after reshape: {output.size()}")
+            #print(f"samples size: {samples.size()}")
+            #print(f"batch_size: {batch_size}")
+            samples[b * batch_size : (b + 1) * batch_size] = smpl
 
         samples = samples[:num_samples]
         #print(samples)

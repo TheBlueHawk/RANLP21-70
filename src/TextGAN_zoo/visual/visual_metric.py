@@ -38,7 +38,7 @@ def get_log_data(filename):
 if __name__ == '__main__':
     log_file_root = '../log/'
     # Custom your log files in lists, no more than len(color_list)
-    log_file_list = ['dpgan_imagecoco', 'sa_dpgan_imagecoco']
+    log_file_list = ['dpgan_imagecoco', 'sa_dpgan_imagecoco2']
     legend_text = ['DPGAN', 'SADPGAN']
 
     color_id = 0
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         all_data = get_log_data(log_file)
         print(all_data)
         idxs = np.argsort(-np.array(all_data['Epoch']))
-        plt_x_y_data(np.array(all_data['Epoch'])[idxs][:length], np.array(all_data['NLL_div'])[idxs][:length],
+        plt_x_y_data(np.array(all_data['Epoch'])[idxs][:length], np.array(all_data['NLL_gen'])[idxs][:length],
                      legend_text[idx], color_id)
         color_id += 1
 
@@ -65,5 +65,5 @@ if __name__ == '__main__':
     plt.xlabel(r'${\rm Epoch}$')
     plt.ylabel(r'${\rm NLL_{div}}$')
     if if_save:
-        plt.savefig('../savefig/G_MLE_NLL_div.png')
+        plt.savefig('../savefig/G_MLE_NLL_gen_2.png')
     plt.show()
