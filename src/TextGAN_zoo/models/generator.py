@@ -290,7 +290,7 @@ class TransformerGenerator(nn.Module):
         #print(samples)
         return samples 
 
-    "Still need to be perfected "
+    "Still need to be fixed "
     def new_sample(self, num_samples, batch_size, start_letter=cfg.start_letter):
         """
         Samples the network and returns num_samples samples of length max_seq_len.
@@ -301,7 +301,8 @@ class TransformerGenerator(nn.Module):
 
         # Generate sentences with multinomial sampling strategy
         for b in range(num_batch):
-            smpl = torch.LongTensor([start_letter] * batch_size).view(-1,1)
+            smpl = torch.LongTensor([start_letter] * batch_size).view(1, -1)
+            #smpl = torch.LongTensor([start_letter] * batch_size * self.max_seq_len).view(self.max_seq_len, batch_size)
             if self.gpu:
                 smpl = smpl.cuda()
             random_encoder_out = torch.rand(self.max_seq_len, batch_size, self.hidden_dim)
@@ -310,7 +311,9 @@ class TransformerGenerator(nn.Module):
 
             for i in range(self.max_seq_len-1):
                 if self.trg_mask is None or self.trg_mask.size(0) != len(smpl):
-                    self.trg_mask = self.generate_square_subsequent_mask(len(smpl)).to(smpl.device)
+                    self.trg_mask = self.generate_square_subsequent_mask(len(smpl))
+                    if self.gpu:
+                        self.trg_mask = self.trg_mask.cuda()
                 trg_pad_mask= self.make_len_mask(smpl)
                 tgt = self.embedding(smpl)
                 tgt = self.pos_encoder(tgt)
@@ -322,21 +325,34 @@ class TransformerGenerator(nn.Module):
                     tgt_key_padding_mask = trg_pad_mask)
                 output = self.fc_out(output)
                 output = self.softmax(output)
-                output = output[-1] # the last timestep
+                #print(f"output size: {output.size()}")
+                #output = output[:,-1, :] # the last timestep
+                #print(f"output size: {output.size()}")
                 values, indices = output.max(dim=-1)
-                indices = indices.view(-1, 1)
+                #indices = indices
+                #print(f"indices size: {indices.size()}")
+                indices = indices[i,:].view(1, -1)
+                #print(f"indices size: {indices.size()}")
                 #print(f"indices: {indices}")
                 #print(f"smpl size: {smpl.size()}")
                 #print(f"indices size: {indices.size()}")
-                smpl = torch.cat((smpl, indices),0)              
+                smpl = torch.cat((smpl, indices),0) 
+                #smpl[i] = indices 
+                #print(f"smpl size: {smpl.size()}")
+                #smpl = indices
+                new_smpl = indices.view(-1,1)
+                #print(f"new_smpl size: {new_smpl.size()}")
+                samples[b * batch_size : (b + 1) * batch_size] = new_smpl
+
+                          
               
             #Reshape to fit samples
             #print(f"smpl size: {smpl.size()}")
-            smpl = smpl.reshape(batch_size, self.max_seq_len)
+            #smpl = smpl.reshape(batch_size, self.max_seq_len)
             #print(f"Output after reshape: {output.size()}")
             #print(f"samples size: {samples.size()}")
             #print(f"batch_size: {batch_size}")
-            samples[b * batch_size : (b + 1) * batch_size] = smpl
+            #samples[b * batch_size : (b + 1) * batch_size] = smpl
 
         samples = samples[:num_samples]
         #print(samples)

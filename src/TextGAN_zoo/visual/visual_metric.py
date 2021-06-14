@@ -63,7 +63,7 @@ if __name__ == '__main__':
     plt.legend()
     # plt.tight_layout()
     plt.xlabel(r'${\rm Epoch}$')
-    plt.ylabel(r'${\rm NLL_{div}}$')
+    plt.ylabel(r'${\rm NLL_{gen}}$')
     if if_save:
         plt.savefig('../savefig/G_MLE_NLL_gen_2.png')
     plt.show()

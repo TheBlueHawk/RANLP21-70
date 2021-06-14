@@ -30,11 +30,11 @@ if_test = int(False)
 run_model = 'sa_dpgan'
 sa = int(True)
 CUDA = int(True)
-oracle_pretrain = int(False)
-gen_pretrain = int(False)
-dis_pretrain = int(False)
+oracle_pretrain = int(True)
+gen_pretrain = int(True)
+dis_pretrain = int(True)
 MLE_train_epoch = 120
-ADV_train_epoch = 200
+ADV_train_epoch = 120
 tips = 'SA_DPGAN experiments'
 
 # ===Oracle  or Real===
@@ -78,7 +78,7 @@ use_nll_oracle = int(True)
 use_nll_gen = int(True)
 use_nll_div = int(True)
 use_bleu = int(True)
-use_self_bleu = int(False)
+use_self_bleu = int(True)
 use_ppl = int(False)
 
 args = [
