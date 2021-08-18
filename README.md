@@ -17,3 +17,6 @@ After training both SADPGAN and DPGAN, two log files should be present in the lo
 
 ## Original repo
 https://github.com/williamSYSU/TextGAN-PyTorch
+
+## Licence
+The code included from the TextGAN-PyTorch repository is owned by William Lam and licensed under MIT standard. I only own my further contributions which are also lincensed under MIT standard. 
