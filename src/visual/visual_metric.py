@@ -9,6 +9,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 color_list = ['#2980b9', '#e74c3c', '#1abc9c', '#9b59b6']
 
@@ -36,9 +37,14 @@ def get_log_data(filename):
 
 
 if __name__ == '__main__':
+    metric = sys.argv[1]
+    fig_name = sys.argv[2]
     log_file_root = '../log/'
     # Custom your log files in lists, no more than len(color_list)
-    log_file_list = ['dpgan_imagecoco', 'sa_dpgan_imagecoco2']
+    dpgan_log_file = sys.argv[3]
+    sa_dpgan_log_file = sys.argv[4]
+    log_file_list = [dpgan_log_file, sa_dpgan_log_file]
+    #log_file_list = ['dpgan_imagecoco', 'sa_dpgan_imagecoco']
     legend_text = ['DPGAN', 'SADPGAN']
 
     color_id = 0
@@ -56,7 +62,7 @@ if __name__ == '__main__':
         all_data = get_log_data(log_file)
         print(all_data)
         idxs = np.argsort(-np.array(all_data['Epoch']))
-        plt_x_y_data(np.array(all_data['Epoch'])[idxs][:length], np.array(all_data['NLL_gen'])[idxs][:length],
+        plt_x_y_data(np.array(all_data['Epoch'])[idxs][:length], np.array(all_data[metric])[idxs][:length],
                      legend_text[idx], color_id)
         color_id += 1
 
@@ -65,5 +71,5 @@ if __name__ == '__main__':
     plt.xlabel(r'${\rm Epoch}$')
     plt.ylabel(r'${\rm NLL_{gen}}$')
     if if_save:
-        plt.savefig('../savefig/G_MLE_NLL_gen_2.png')
+        plt.savefig('../savefig/'+ fig_name + 'G_MLE_NLL_gen.png')
     plt.show()

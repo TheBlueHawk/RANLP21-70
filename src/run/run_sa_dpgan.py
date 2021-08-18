@@ -20,7 +20,6 @@ else:
     print('Missing argument: job_id and gpu_id. Use default job_id: {}, gpu_id: {}'.format(job_id, gpu_id))
 
 # Executables
-#executable = '/home/kevinblin/anaconda3/envs/pytorch_env/bin/python'  # specify your own python interpreter path here
 executable = '/usr/bin/python3'  # specify your own python interpreter path here
 rootdir = '../'
 scriptname = 'main.py'
@@ -30,9 +29,9 @@ if_test = int(False)
 run_model = 'sa_dpgan'
 sa = int(True)
 CUDA = int(True)
-oracle_pretrain = int(True)
-gen_pretrain = int(True)
-dis_pretrain = int(True)
+oracle_pretrain = int(False)
+gen_pretrain = int(False)
+dis_pretrain = int(False)
 MLE_train_epoch = 120
 ADV_train_epoch = 120
 tips = 'SA_DPGAN experiments'
