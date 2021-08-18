@@ -1,7 +1,0 @@
-pytorch
-torchvision
-cudatoolkit
-pymongo
-scipy
-numpy
-matplotlib
